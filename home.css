@@ -258,6 +258,7 @@ header{
         box-shadow: 0 5px 5px rgba(212, 209, 209, .5);
         overflow: hidden; 
         transition: all .2s ease-in-out;
+        max-height: 0px;
     }
 
     .mobile__nav .child{
@@ -269,6 +270,7 @@ header{
         box-shadow: none;
         overflow: hidden;
         transition: all .2s ease-in-out;
+        max-height: 0px;
     }
 
     .parent>a::before{
@@ -303,6 +305,6 @@ header{
     }
 
     .hide{
-        height: 0px !important;
+        max-height: 600px !important;
     }
 }
