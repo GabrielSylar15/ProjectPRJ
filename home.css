@@ -1,10 +1,6 @@
 body{
-    height: 1000px;
+    height: 2000px;
     background-color: white;
-}
-
-header{
-   
 }
 
 #checkbox{
@@ -49,11 +45,12 @@ header{
     display: inline-block;
     align-items: center;
     height: 100px;
-    position: sticky;
-    top: 100px;
     width: 100%;
     box-shadow: 0 5px 15px rgba(212, 209, 209, .5); 
-    z-index: 0;
+    z-index: 1;
+    transition: all .3s ease-in-out;
+    top: -100px;
+    background-color: white;
 }
 
 .header__logo img{
@@ -98,6 +95,7 @@ header{
 
 .header__navigation>ul>li{
     padding: 40px 20px;
+    position: relative;
 }
 
 .header__navigation a:hover,
@@ -118,6 +116,7 @@ header{
     box-shadow: 0 5px 15px rgba(212, 209, 209, .5); 
     width: 160px;
     background-color: white;
+    z-index: 1;
 }
 
 .header__navigation .child li:first-child{
@@ -210,6 +209,10 @@ header{
     display: none;
 }
 
+.scrollDownP{
+    position: fixed;
+    top: 0px;
+}
 /* -----HEADER REPONSIVE-----*/
 
 @media (max-width: 948px) {
@@ -219,6 +222,17 @@ header{
 
     .mobile__header{
         display: block;
+        width: 100%;
+        background-color: white;
+        transition: all .3s ease-in-out;
+        top: -100px;
+        z-index: 2;
+    }
+    
+
+    .scrollDownM{
+        position: fixed;
+        top: 0px;
     }
 
     .header__mobile--nav{
@@ -251,14 +265,18 @@ header{
 
     .mobile__nav{
         width: 90%;
+        position: absolute;
         font-family: Poppins, sans-serif;
         font-size: 15px;
-        margin: auto;
         display: block;
         box-shadow: 0 5px 5px rgba(212, 209, 209, .5);
         overflow: hidden; 
         transition: all .2s ease-in-out;
         max-height: 0px;
+        background-color: white;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
     }
 
     .mobile__nav .child{
@@ -306,5 +324,146 @@ header{
 
     .hide{
         max-height: 600px !important;
+    }
+}
+/* ---Slider--- */
+body .containerX{
+    margin: 0px;
+}
+
+.slider img{
+    width: 100%;
+    background-color:skyblue;
+    height: 800px;
+}
+
+.slider__content{
+    height: 800px;
+    width: 100%;
+    background-color: skyblue;
+    position: relative;
+    overflow: hidden;
+}
+
+.slider__content p{
+    font-size: 100px;
+    color: rgb(23, 131, 194);
+    font-weight: 700;
+    z-index: 0;
+    padding: 10px;
+}
+
+.slider__content p:not(:first-child){
+    font-family: Playfair Display, serif;
+    color: black;
+}
+
+.slider__content p:nth-child(4){
+    font-style: italic;
+    font-size: 20px !important;
+    font-weight: lighter;
+}
+
+.slider__content p:first-child{
+    font-size: 40px;
+    font-family: Dancing Script;
+}
+
+.slider__content .button{
+    font-size: 20px;
+    z-index: 0;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-size: 20px;
+    background-color: rgba(1,188,243,255);
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.button a{
+    font-family: Poppins, sans-serif;
+    text-decoration: none;
+    font-weight: lighter;
+    color: white;
+}
+
+.slider__content .button::before{
+    content: "";
+    position: absolute;
+    top: 0px;   
+    left: 0px;
+    bottom: 0px;
+    background-color: rgba(129,233,237,255);
+    border-radius: 0px;
+    width: 100%;
+    border-radius: 30px;
+    transform: scaleX(0);
+    transition: transform;
+    transition-duration: .5s;
+    transform-origin: 0 50%;
+}
+
+
+.slider__content .button:hover::before{
+    transform: scaleX(1);
+    z-index: -1;
+}
+
+.slider__content>div{
+    padding-left: 30px;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%) translateX(100%);
+    animation: fade-in .6s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+    from{
+        transform: translateY(-50%) translateX(100%);
+    }
+    to{
+        transform: translateY(-50%) translateX(0%);
+    }
+}
+
+/* ---Reponsive Slidebar--- */
+@media (max-width: 739px) {
+    .slider__content{
+        height: 350px;
+        z-index: 0;
+    }
+
+    .slider__content p{
+        font-size: 30px; 
+    }
+
+    .slider__content p:not(:first-child, :last-child){
+        font-size: 30px;
+    }
+    
+    .slider__content .button a{
+        font-size: 16px;
+    }
+    
+    .slider__content>div{
+        padding-left: 10%;
+    }
+}
+
+@media (max-width: 948px) and (min-width: 740px)  {
+    .slider__content{
+        height: 500px;
+    }
+    .slider img{
+        height: 500px;
+    }
+    .slider__content p{
+        font-size: 50px; 
+    }
+    .slider__content .button a{
+        font-size: 20px;
     }
 }

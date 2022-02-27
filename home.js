@@ -46,3 +46,23 @@ document.querySelector(".mobile__header .parent").onclick = function(){
 document.querySelector(".header__bar").onclick = function(){
     parentElement.classList.toggle("hide")
 }
+
+// Window Scroll
+// For Mobile
+window.onscroll = function() {scrollFunctionM(),scrollFunctionP()};
+function scrollFunctionM() {
+  if (document.documentElement.scrollTop > 150) {
+    document.querySelector(".mobile__header").classList.add("scrollDownM");
+  }else{
+    document.querySelector(".mobile__header").classList.remove("scrollDownM");
+  }
+}
+// For PC
+function scrollFunctionP() {
+  if (document.documentElement.scrollTop > 200) {
+    document.querySelector(".header").classList.add("scrollDownP");
+  }else{
+    document.querySelector(".header").classList.remove("scrollDownP");
+  }
+  console.log(document.documentElement.scrollTop)
+}

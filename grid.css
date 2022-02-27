@@ -16,7 +16,8 @@
 }
 
 .sm-0{
-    display: none;
+    flex-basis: 0%;
+    max-width: 0%;
 }
 
 .sm-1{
@@ -90,7 +91,8 @@
     }
 
     .md-0{
-        display: none;
+        flex-basis: 0%;
+        max-width: 0%;
     }
     
     .md-1{
