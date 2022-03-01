@@ -49,7 +49,7 @@ document.querySelector(".header__bar").onclick = function(){
 
 // Window Scroll
 // For Mobile
-window.onscroll = function() {scrollFunctionM(),scrollFunctionP()};
+window.onscroll = function() {scrollFunctionM(), scrollFunctionP()};
 function scrollFunctionM() {
   if (document.documentElement.scrollTop > 150) {
     document.querySelector(".mobile__header").classList.add("scrollDownM");
