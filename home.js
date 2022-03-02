@@ -64,5 +64,8 @@ function scrollFunctionP() {
   }else{
     document.querySelector(".header").classList.remove("scrollDownP");
   }
-  console.log(document.documentElement.scrollTop)
+  // console.log(document.documentElement.scrollTop)
 }
+
+
+// SlideShow Animation
