@@ -14,17 +14,17 @@ public class Account {
     private String userName;
     private String password;
     private boolean isAdmin;
-    private String displayNamme;
+    private String displayName;
 
     public Account() {
     }
 
-    public Account(int cusID, String userName, String password, boolean isAdmin, String displayNamme) {
+    public Account(int cusID, String userName, String password, boolean isAdmin, String displayName) {
         this.cusID = cusID;
         this.userName = userName;
         this.password = password;
         this.isAdmin = isAdmin;
-        this.displayNamme = displayNamme;
+        this.displayName = displayName;
     }
 
     public int getCusID() {
@@ -43,8 +43,8 @@ public class Account {
         return isAdmin;
     }
 
-    public String getDisplayNamme() {
-        return displayNamme;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public void setCusID(int cusID) {
@@ -63,8 +63,8 @@ public class Account {
         this.isAdmin = isAdmin;
     }
 
-    public void setDisplayNamme(String displayNamme) {
-        this.displayNamme = displayNamme;
+    public void setDisplayNamme(String displayName) {
+        this.displayName = displayName;
     }
     
 }

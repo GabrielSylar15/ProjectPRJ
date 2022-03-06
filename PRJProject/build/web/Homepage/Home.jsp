@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,7 @@
         <header>
             <div class="header__largescreen">
                 <div class="header__ann">
-                    <p>Sản phẩm abc đã tăng giá lên 50%, mọi người chú ý💥 Sản phẩm abc đã tăng giá lên 50%, mọi người chú ý💥 </p>
+                    <p>Sản phẩm abcxyz đã tăng giá lên 50%, mọi người chú ý</p>
                  </div>
                  <div class="header row">
                      <div class="header__logo lg-2 md-2">
@@ -39,6 +40,17 @@
                          <ul>
                              <li>
                                  <a href="">Trang chủ</a>
+                             </li>
+                             <li class="parent">
+                                 <a href="">Quản lý</a>
+                                 <ul class="child">
+                                     <li>
+                                         <a href="">Đơn hàng</a>
+                                     </li>
+                                     <li>
+                                         <a href="">Sản phẩm</a>
+                                     </li>                                     
+                                 </ul>
                              </li>
                              <li>
                                  <a href="">Giày</a>
@@ -82,7 +94,24 @@
                              <li class="cart">
                                  <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
                              </li>
-                             <li class="login"><a href="../login">Đăng Nhập</a></li>
+                             <c:if test="${sessionScope.account==null}">
+                                <li class="login">
+                                    <a href="../login">Đăng Nhập</a>
+                                </li>
+                             </c:if>
+
+                             <c:if test="${sessionScope.account!=null}">
+                                <li class="cart">                        
+                                    <a href="#" class="user">
+                                        <i class="fa-solid fa-user"></i>
+                                    </a>
+                                    <div class="expand-infor">
+                                        <a href=""><i class="fa-solid fa-user-large"></i> Nguyễn Thế Vinh</a> 
+                                        <a href="">Đơn hàng đã mua</a>
+                                        <a href="">Đặt trước</a>
+                                    </div>
+                                </li>
+                             </c:if>
                          </ul>
                      </div>
                  </div>
@@ -154,7 +183,10 @@
                     <li>
                         <a href="">Liên hệ</a>
                     </li>
-                    <li><a href="../login">Đăng Nhập</a></li>
+                    <li>
+                        Xin chào Vinhdeptrai
+                        <!--<a href="../login">Đăng Nhập-->
+                    </a></li>
                 </ul>
 
             </div>

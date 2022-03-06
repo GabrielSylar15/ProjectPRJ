@@ -2,11 +2,6 @@ body{
     background-color: white;
 }
 
-#checkbox{
-    appearance:none;
-    display: none;
-}
-
 .mobile__nav{
     display: none;
 }
@@ -82,9 +77,13 @@ body{
     display: flex;
 }
 
-.header__tool ul{
-    justify-content: space-around;
-    display: flex; 
+.header__tool ul{ 
+    justify-content: flex-end;
+    display: flex;
+}
+
+.header__tool ul li{
+    margin: 0px 12px !important;
 }
 
 .header__navigation li{
@@ -127,7 +126,7 @@ body{
 }
 
 .header__tool .search{
-    padding: 8px 10px;
+    padding: 8px 12px;
     margin: auto 0px;
     border: 1px solid lightgray;
     font-size: 15px;
@@ -149,6 +148,7 @@ body{
 }
 
 .cart{
+    position: relative;
     border-radius: 100%;
     text-align: center;
     display: flex;
@@ -160,6 +160,31 @@ body{
     display: inline-block;
     border: 1px solid lightgray;
     border-radius: 50%;
+}
+
+.header__tool .expand-infor{
+    position: absolute;
+    top: 50px;
+    width: 220px;
+    z-index: 99;
+    right: 0px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(212, 209, 209, .5); 
+    display: none;
+}
+
+.header__tool .expand-infor a{
+    border: none;
+    border-radius: 0px;
+    width: 90%;
+    border-bottom: 1px lightgrey solid;
+    font-family: Playfair Display, serif;
+    margin: auto;
+}
+
+.header__tool .expand-infor a:hover{
+    color: red;
 }
 
 .login{

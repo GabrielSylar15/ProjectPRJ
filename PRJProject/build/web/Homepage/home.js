@@ -68,6 +68,19 @@ function scrollFunctionP() {
   }
 }
 
+// After Login
+function appearLogin(){
+  var activeLogin =  document.querySelector(".expand-infor");
+  document.querySelector(".cart .user").onclick = function(){
+      if(activeLogin.style.display!="block"){
+        activeLogin.setAttribute("style","display:block")
+      }else{
+        activeLogin.setAttribute("style","display:none")
+      }
+  }
+}
+
+appearLogin();
 
 // SlideShow Animation
 
@@ -122,8 +135,6 @@ function responsiveSlide(){
     }
   }
 }
-
-
 
 responsiveSlide()
 document.querySelector("body").onresize = responsiveSlide;

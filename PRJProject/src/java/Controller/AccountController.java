@@ -56,8 +56,8 @@ public class AccountController extends HttpServlet {
         if(account==null){
             response.getWriter().print("Fail");
         }else{
-            response.getWriter().print("succ");
             request.getSession().setAttribute("account", account);
+            response.sendRedirect("Homepage/Home.jsp");
         }
     }
 
