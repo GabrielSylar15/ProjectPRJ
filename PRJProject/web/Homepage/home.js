@@ -53,7 +53,7 @@ document.querySelector(".header__bar").onclick = function(){
 // For Mobile
 window.onscroll = function() {scrollFunctionM(), scrollFunctionP()};
 function scrollFunctionM() {
-  if (document.documentElement.scrollTop > 150) {
+  if (document.scrollingElement.scrollTop > 150) {
     document.querySelector(".mobile__header").classList.add("scrollDownM");
   }else{
     document.querySelector(".mobile__header").classList.remove("scrollDownM");
@@ -61,7 +61,7 @@ function scrollFunctionM() {
 }
 // For PC
 function scrollFunctionP() {
-  if (document.documentElement.scrollTop > 200) {
+  if (document.scrollingElement.scrollTop > 200) {
     document.querySelector(".header").classList.add("scrollDownP");
   }else{
     document.querySelector(".header").classList.remove("scrollDownP");
@@ -139,7 +139,10 @@ function responsiveSlide(){
 responsiveSlide()
 document.querySelector("body").onresize = responsiveSlide;
 
-elementowl.ondrag = function(){
-  console.log("hehe")
-}
+// elementowl.ondrag = function(){
+//   console.log("hehe")
+// }
+
+
+
 

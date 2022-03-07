@@ -53,7 +53,7 @@
                                  </ul>
                              </li>
                              <li>
-                                 <a href="">Giày</a>
+                                 <a href="../template/listproduct.jsp">Giày</a>
                              </li>
                              <li>
                                  <a href="">Dép</a>
@@ -106,7 +106,7 @@
                                         <i class="fa-solid fa-user"></i>
                                     </a>
                                     <div class="expand-infor">
-                                        <a href=""><i class="fa-solid fa-user-large"></i> Nguyễn Thế Vinh</a> 
+                                        <a href=""><i class="fa-solid fa-user-large"></i>${sessionScope.account.displayName}</a> 
                                         <a href="">Đơn hàng đã mua</a>
                                         <a href="">Đặt trước</a>
                                     </div>
