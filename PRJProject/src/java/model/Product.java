@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -20,39 +21,37 @@ public class Product {
     private int quantityPerUnit;
     private Category category;
     private String description;
+    private boolean isOption;
+    private ArrayList<Image> listImages = new ArrayList<>();
+    private ArrayList<OptionValue> listOptionValues = new ArrayList<>();
 
-    private ArrayList<String> listColors = new ArrayList<>();
-    private ArrayList<String> listImages = new ArrayList<>();
-    private ArrayList<Integer> listSizes = new ArrayList<>();
-
-    public void setListColors(ArrayList<String> listColors) {
-        this.listColors = listColors;
-    }
-
-    public void setListImages(ArrayList<String> listImages) {
+    public void setListImages(ArrayList<Image> listImages) {
         this.listImages = listImages;
     }
 
-    public void setListSizes(ArrayList<Integer> listSizes) {
-        this.listSizes = listSizes;
-    }
-
-    public ArrayList<String> getListColors() {
-        return listColors;
-    }
-
-    public ArrayList<String> getListImages() {
+    public ArrayList<Image> getListImages() {
         return listImages;
     }
 
-    public ArrayList<Integer> getListSizes() {
-        return listSizes;
+    
+    public ArrayList<OptionValue> getListOptionValues() {
+        return listOptionValues;
     }
 
-    public Product() {
+    public boolean isIsOption() {
+        return isOption;
     }
 
-    public Product(int productID, String productName, BigDecimal price, BigDecimal retailPrice, int quantity, int quantityPerUnit, Category category, String description) {
+    public void setIsOption(boolean isOption) {
+        this.isOption = isOption;
+    }
+
+    
+    public void setListOptionValues(ArrayList<OptionValue> listOptionValues) {
+        this.listOptionValues = listOptionValues;
+    }
+
+    public Product(int productID, String productName, BigDecimal price, BigDecimal retailPrice, int quantity, int quantityPerUnit, Category category, String description, boolean isOption) {
         this.productID = productID;
         this.productName = productName;
         this.price = price;
@@ -61,9 +60,12 @@ public class Product {
         this.quantityPerUnit = quantityPerUnit;
         this.category = category;
         this.description = description;
+        this.isOption = isOption;
+    }
+    
+    public Product() {
     }
 
-    
     public int getProductID() {
         return productID;
     }
