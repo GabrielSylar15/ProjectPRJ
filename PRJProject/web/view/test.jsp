@@ -38,15 +38,10 @@
                         <td>${p.quantityPerUnit}</td>
                         <td>${p.description}</td>   
                         <td>
-                            <c:forEach items="${p.listColors}" var="color">
-                                ${color}
+                            <c:forEach items="${p.listOptionValues}" var="color">
+                                ${color.valueID} ${color.productID} ${color.optionID} ${color.quantity} ${color.optionName} ${color.valueName}
                             </c:forEach>
-                        </td>
-                        <td>
-                            <c:forEach items="${p.listSizes}" var="size">
-                                ${size}
-                            </c:forEach>
-                        </td>                        
+                        </td>                      
                     </tr>
                 </c:forEach>
             </tbody>
