@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -22,17 +21,16 @@ public class Product {
     private Category category;
     private String description;
     private boolean isOption;
-    private ArrayList<Image> listImages = new ArrayList<>();
+    private ArrayList<ProductImages> listImages = new ArrayList<>();
     private ArrayList<OptionValue> listOptionValues = new ArrayList<>();
 
-    public void setListImages(ArrayList<Image> listImages) {
-        this.listImages = listImages;
-    }
-
-    public ArrayList<Image> getListImages() {
+    public ArrayList<ProductImages> getListImages() {
         return listImages;
     }
 
+    public void setListImages(ArrayList<ProductImages> listImages) {
+        this.listImages = listImages;
+    }
     
     public ArrayList<OptionValue> getListOptionValues() {
         return listOptionValues;

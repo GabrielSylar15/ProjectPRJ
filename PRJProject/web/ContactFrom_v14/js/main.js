@@ -127,9 +127,9 @@ function updateSKU(){
 
             ButtonRemoveSKU.onclick = function(){
                 wrapper_sku.remove();
-                 drawTable();
+                drawTable();
             }
-            // drawTable();
+            drawTable();
             updateProperties();
         }     
     }
@@ -143,24 +143,48 @@ function drawTable(){
     var colors = document.querySelectorAll(".color");
     var sizes = document.querySelectorAll(".size");
     var colortable="", sizetable="";
-    colortable += "<thead><tr><th>CvsS</th>"; 
+    if(colors.length!=0&&sizes.length!=0)   colortable += "<thead><tr><th>CvsS</th>"; 
     if(sizes.length==0&&colors.length==0){
         table.innerHTML='<div class="wrap-input100 sku--size"><input id="phone" class="input100" type="text" name="quantity" placeholder="Eg. 100"></div>'
     }else{
-        for (let index = 0; index < colors.length; index++) {
-            colortable += `<th>${colors[index].value}</th>`
-        }
-        colortable+="</tr></thead>";
-        for (let index = 0; index < sizes.length; index++) {
-            sizetable+=  `<tr><td>${sizes[index].value}</td>`
+
+        if(sizes.length!=0&&colors.length==0){
+            for (let index = 0; index < sizes.length; index++) {
+                colortable += `<tr>`;
+                colortable += `<th>${sizes[index].value}</th>`;
+                colortable += `<th><input type="text" value="" name="quantity"></th>`;
+                colortable += `</tr>`;
+            }
+        }else if(sizes.length!=0&&colors.length!=0){
             for (let index = 0; index < colors.length; index++) {
-                sizetable+='<td><input type="text"></td>'   
+                colortable += `<th>${colors[index].value}</th>`;
+            }
+        }
+
+        colortable+="</tr></thead>";
+        if(sizes.length==0&&colors.length!=0){
+            sizetable+= '<tr>';
+            for (let index = 0; index < colors.length; index++) {
+                sizetable += `<tr>`;
+                sizetable += `<th>${colors[index].value}</th>`;
+                sizetable+='<th><input type="text" value="" name="quantity"></th>';
+                sizetable += `</tr>`;
             }
             sizetable+="</tr>";
+        }
+        else if(sizes.length!=0&&colors.length!=0){
+            for (let i = 0; i < sizes.length; i++) {
+                sizetable+=  `<tr><td>${sizes[i].value}</td>`
+                for (let j = 0; j < colors.length; j++) {
+                    sizetable+=`<td><input type="text" value="" name="quantity"></td>`;
+                }
+                sizetable+="</tr>";
+            }
         }
         table.innerHTML = `<table border="1">${colortable}${sizetable}</table>`;
     }
 }
+
 
 function updateProperties(){
     var inputElements = document.querySelectorAll(".wrapper--sku input");
@@ -170,4 +194,4 @@ function updateProperties(){
         }  
     }
 }
-updateProperties()
+// updateProperties()

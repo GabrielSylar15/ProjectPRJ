@@ -6,7 +6,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
-        <url-pattern>/listproducts</url-pattern>
+        <url-pattern>/ContactFrom_v14/insertproducts</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
