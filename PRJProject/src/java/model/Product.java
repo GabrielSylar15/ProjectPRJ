@@ -23,7 +23,25 @@ public class Product {
     private boolean isOption;
     private ArrayList<ProductImages> listImages = new ArrayList<>();
     private ArrayList<OptionValue> listOptionValues = new ArrayList<>();
+    private ArrayList<SkuValue> listSkuValues = new ArrayList<>();
+    private ArrayList<Option> listOptions = new ArrayList<>();
 
+    public ArrayList<Option> getListOptions() {
+        return listOptions;
+    }
+
+    public void setListOptions(ArrayList<Option> listOptions) {
+        this.listOptions = listOptions;
+    }
+    
+    public ArrayList<SkuValue> getListSkuValues() {
+        return listSkuValues;
+    }
+
+    public void setListSkuValues(ArrayList<SkuValue> listSkuValues) {
+        this.listSkuValues = listSkuValues;
+    }
+    
     public ArrayList<ProductImages> getListImages() {
         return listImages;
     }
@@ -127,6 +145,4 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
 }

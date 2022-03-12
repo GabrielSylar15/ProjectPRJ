@@ -13,27 +13,17 @@ public class OptionValue {
     private int valueID;
     private int productID;
     private int optionID;
-    private int quantity;
-    private String optionName;
     private String valueName;
 
     public OptionValue() {
     }
 
-    public void setOptionName(String optionName) {
-        this.optionName = optionName;
-    }
 
-    public String getOptionName() {
-        return optionName;
-    }
 
-    public OptionValue(int valueID, int productID, int optionID, int quantity, String optionName, String valueName) {
+    public OptionValue(int valueID, int productID, int optionID, String valueName) {
         this.valueID = valueID;
         this.productID = productID;
         this.optionID = optionID;
-        this.quantity = quantity;
-        this.optionName = optionName;
         this.valueName = valueName;
     }
 
@@ -49,9 +39,6 @@ public class OptionValue {
         return optionID;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
 
     public String getValueName() {
         return valueName;
@@ -67,10 +54,6 @@ public class OptionValue {
 
     public void setOptionID(int optionID) {
         this.optionID = optionID;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public void setValueName(String valueName) {

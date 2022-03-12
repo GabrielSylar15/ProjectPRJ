@@ -59,7 +59,7 @@
 
 				<label class="label-input100" for="message" name="category">Loại sản phẩm:</label>
 				<div class="wrap-input100">
-					<select>
+					<select name="category">
                                             <c:forEach items="${requestScope.listCategories}" var="category">
                                                 <option value="${category.categoryID}">${category.categoryName}</option>
                                             </c:forEach>
