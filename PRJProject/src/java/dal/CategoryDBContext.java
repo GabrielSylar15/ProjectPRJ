@@ -29,7 +29,6 @@ public class CategoryDBContext extends DBContext{
                 Category category = new Category();
                 category.setCategoryID(rs.getInt("CategoryID"));
                 category.setCategoryName(rs.getString("CategoryName"));
-    
                 listCategories.add(category);
             }   return listCategories;
         } catch (SQLException ex) {

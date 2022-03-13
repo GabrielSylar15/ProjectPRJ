@@ -16,31 +16,46 @@ public class Product {
     private int productID;
     private String productName;
     private BigDecimal price, retailPrice;
-    private int quantity;
     private int quantityPerUnit;
     private Category category;
     private String description;
-    private boolean isOption;
     private ArrayList<ProductImages> listImages = new ArrayList<>();
-    private ArrayList<OptionValue> listOptionValues = new ArrayList<>();
-    private ArrayList<SkuValue> listSkuValues = new ArrayList<>();
-    private ArrayList<Option> listOptions = new ArrayList<>();
+    private ArrayList<Size> listSizes = new ArrayList<>();
+    private ArrayList<Color> listColors = new ArrayList<>();
+    ArrayList<Integer> quantity = new ArrayList<>();
+    ArrayList<Color_Size> listColor_Sizes = new ArrayList<>();
 
-    public ArrayList<Option> getListOptions() {
-        return listOptions;
+    public ArrayList<Color_Size> getListColor_Sizes() {
+        return listColor_Sizes;
     }
 
-    public void setListOptions(ArrayList<Option> listOptions) {
-        this.listOptions = listOptions;
+    public void setListColor_Sizes(ArrayList<Color_Size> listColor_Sizes) {
+        this.listColor_Sizes = listColor_Sizes;
     }
     
-    public ArrayList<SkuValue> getListSkuValues() {
-        return listSkuValues;
+    public ArrayList<Size> getListSizes() {
+        return listSizes;
     }
 
-    public void setListSkuValues(ArrayList<SkuValue> listSkuValues) {
-        this.listSkuValues = listSkuValues;
+    public ArrayList<Integer> getQuantity() {
+        return quantity;
     }
+
+    public void setQuantity(ArrayList<Integer> quantity) {
+        this.quantity = quantity;
+    }
+
+    public ArrayList<Color> getListColors() {
+        return listColors;
+    }
+
+    public void setListSizes(ArrayList<Size> listSizes) {
+        this.listSizes = listSizes;
+    }
+
+    public void setListColors(ArrayList<Color> listColors) {
+        this.listColors = listColors;
+    }    
     
     public ArrayList<ProductImages> getListImages() {
         return listImages;
@@ -49,34 +64,15 @@ public class Product {
     public void setListImages(ArrayList<ProductImages> listImages) {
         this.listImages = listImages;
     }
-    
-    public ArrayList<OptionValue> getListOptionValues() {
-        return listOptionValues;
-    }
-
-    public boolean isIsOption() {
-        return isOption;
-    }
-
-    public void setIsOption(boolean isOption) {
-        this.isOption = isOption;
-    }
-
-    
-    public void setListOptionValues(ArrayList<OptionValue> listOptionValues) {
-        this.listOptionValues = listOptionValues;
-    }
 
     public Product(int productID, String productName, BigDecimal price, BigDecimal retailPrice, int quantity, int quantityPerUnit, Category category, String description, boolean isOption) {
         this.productID = productID;
         this.productName = productName;
         this.price = price;
         this.retailPrice = retailPrice;
-        this.quantity = quantity;
         this.quantityPerUnit = quantityPerUnit;
         this.category = category;
         this.description = description;
-        this.isOption = isOption;
     }
     
     public Product() {
@@ -96,10 +92,6 @@ public class Product {
 
     public BigDecimal getRetailPrice() {
         return retailPrice;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public int getQuantityPerUnit() {
@@ -128,10 +120,6 @@ public class Product {
 
     public void setRetailPrice(BigDecimal retailPrice) {
         this.retailPrice = retailPrice;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public void setQuantityPerUnit(int quantityPerUnit) {

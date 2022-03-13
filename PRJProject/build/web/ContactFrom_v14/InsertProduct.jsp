@@ -5,14 +5,17 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <!DOCTYPE html>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<html lang="en">
+<html>
 <head>
-	<title>Contact V14</title>
+	<title>Thêm sản phẩm</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->

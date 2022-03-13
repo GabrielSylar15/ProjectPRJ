@@ -5,7 +5,6 @@
  */
 package dal;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +13,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Category;
-import model.Option;
-import model.OptionValue;
+import model.Color;
+import model.Color_Size;
 import model.Product;
 import model.ProductImages;
-import model.SkuValue;
-
+import model.Size;
 /**
  *
  * @author ADMIN
@@ -41,37 +39,29 @@ public class ProductDBContext extends DBContext{
                 p.setProductID(rs.getInt("ProductID"));
                 p.setProductName(rs.getString("ProductName"));
                 p.setPrice(rs.getBigDecimal("Price"));
-                p.setQuantity(rs.getInt("Quantity"));
                 p.setQuantityPerUnit(rs.getInt("QuantityPerUnit"));
                 Category category = new Category();
                 category.setCategoryID(rs.getInt("CategoryID"));
                 p.setCategory(category);
                 p.setDescription(rs.getNString("Description"));
                 p.setRetailPrice(rs.getBigDecimal("RetailPrice"));
-                p.setIsOption(rs.getBoolean("isOption"));
                 listProducts.add(p);
             }
             
-            String sql_color="select ov.ValueID, a.ProductID, ov.OptionID, ov.Quantity, ValueName, OptionName from Product as a join OptionValue as ov on ov.productID = a.ProductID\n" +
-"						  join [Option] as o on ov.OptionID = o.OptionID \n" +
-"						  where a.ProductID=?";
+           String sql_listImages = "select Image, ImageID from ProductImage where ProductID = ?";
             for (Product p : listProducts) {
-                ArrayList<OptionValue> listOptionValues = new ArrayList<>();              
-                PreparedStatement stm = connection.prepareStatement(sql_color);
-                stm.setInt(1, p.getProductID());
-                ResultSet rs2 = stm.executeQuery();
-                while(rs2.next()){
-                    OptionValue op = new OptionValue();
-                    op.setValueID(rs2.getInt("ValueID"));
-                    op.setOptionID(rs2.getInt("OptionID"));
-                    op.setProductID(rs2.getInt("ProductID"));
-//                    op.setQuantity(rs2.getInt("Quantity"));
-                    op.setValueName(rs2.getNString("ValueName"));
-//                    op.setOptionName(rs2.getString("OptionName"));
-                    listOptionValues.add(op);
+                PreparedStatement st_img = connection.prepareStatement(sql_listImages);
+                st_img.setInt(1, p.getProductID());
+                ArrayList<ProductImages> listImages = new ArrayList<>();
+                ResultSet rs_img = st_img.executeQuery();
+                while (rs_img.next()) {                    
+                    ProductImages img = new ProductImages();
+                    img.setImage(rs_img.getString("Image"));
+                    img.setImageID(rs_img.getInt("ImageID"));
+                    listImages.add(img);
                 }
-                p.setListOptionValues(listOptionValues);
-            }   
+               p.setListImages(listImages);
+            }
             
             return listProducts;
         } catch (SQLException ex) {
@@ -88,13 +78,9 @@ public class ProductDBContext extends DBContext{
                         "           ,[QuantityPerUnit]\n" +
                         "           ,[CategoryID]\n" +
                         "           ,[Description]\n" +
-                        "           ,[RetailPrice]\n" +
-                        "           ,[Quantity]\n" +
-                        "           ,[isOption])\n" +
+                        "           ,[RetailPrice])\n" +
                         "     VALUES\n" +
                         "           (?\n" +
-                        "           ,?\n" +
-                        "           ,?\n" +
                         "           ,?\n" +
                         "           ,?\n" +
                         "           ,?\n" +
@@ -108,12 +94,6 @@ public class ProductDBContext extends DBContext{
             st.setInt(4, p.getCategory().getCategoryID());
             st.setNString(5, p.getDescription());
             st.setBigDecimal(6, p.getRetailPrice());
-            if(p.isIsOption()==false){
-                st.setInt(7, p.getQuantity());
-            }else{
-                st.setNull(7, Types.INTEGER);
-            }
-            st.setBoolean(8, p.isIsOption());
             st.executeUpdate();
             
 //            Get ID for Product  
@@ -124,77 +104,75 @@ public class ProductDBContext extends DBContext{
                 p.setProductID(rs.getInt("productid"));
             }
             
-            String sql_op_p = "INSERT INTO [dbo].[Option_Product]\n" +
+            String sql_images = "INSERT INTO [ProductImage]\n" +
                                 "           ([ProductID]\n" +
-                                "           ,[OptionID])\n" +
+                                "           ,[Image])\n" +
                                 "     VALUES\n" +
                                 "           (?\n" +
                                 "           ,?)";
-            for (Option o : p.getListOptions()) {
-                PreparedStatement stm_op_p = connection.prepareStatement(sql_op_p);
-                stm_op_p.setInt(1, p.getProductID());
-                stm_op_p.setInt(2, o.getOptionID());
-                stm_op_p.executeUpdate();
+            for (ProductImages pi : p.getListImages()) {
+                PreparedStatement stm_pi = connection.prepareStatement(sql_images);
+                stm_pi.setInt(1, p.getProductID());
+                stm_pi.setString(2, pi.getImage());
+                stm_pi.executeUpdate();
+            }
+       
+            String sql_size="INSERT INTO [Size]\n" +
+                            "           ([SizeID]\n" +
+                            "           ,[ProductID]\n" +
+                            "           ,[Size])\n" +
+                            "     VALUES\n" +
+                            "           (?\n" +
+                            "           ,?\n" +
+                            "           ,?)";
+            for (Size s: p.getListSizes()) {
+                PreparedStatement stm_size = connection.prepareStatement(sql_size);
+                stm_size.setInt(1, s.getSizeID());
+                stm_size.setInt(2, p.getProductID());
+                stm_size.setNString(3, s.getSize());
+                stm_size.executeUpdate();
+            } 
+            
+           String sql_color="INSERT INTO [Color]\n" +
+                            "           ([ColorID]\n" +
+                            "           ,[ProductID]\n" +
+                            "           ,[Color])\n" +
+                            "     VALUES\n" +
+                            "           (?\n" +
+                            "           ,?\n" +
+                            "           ,?)";
+            for (Color c: p.getListColors()) {
+                PreparedStatement stm_color = connection.prepareStatement(sql_color);
+                stm_color.setInt(1, c.getColorID());
+                stm_color.setInt(2, p.getProductID());
+                stm_color.setNString(3, c.getColor());
+                stm_color.executeUpdate();
             }            
             
-            String sql_optionvalue="INSERT INTO [OptionValue]\n" +
-                                    "           ([ValueID]\n" +
-                                    "           ,[ProductID]\n" +
-                                    "           ,[OptionID]\n" +
-                                    "           ,[ValueName])\n" +
+            String sql_color_size = "INSERT INTO [Quantity]\n" +
+                                    "           ([ProductID]\n" +
+                                    "           ,[ColorID]\n" +
+                                    "           ,[SizeID]\n" +
+                                    "           ,[Quantity])\n" +
                                     "     VALUES\n" +
                                     "           (?\n" +
                                     "           ,?\n" +
                                     "           ,?\n" +
                                     "           ,?)";
-            for (OptionValue op : p.getListOptionValues()) {
-                PreparedStatement stm_op = connection.prepareStatement(sql_optionvalue);
-                stm_op.setInt(1, op.getValueID());
-                stm_op.setInt(2, p.getProductID());
-                stm_op.setInt(3, op.getOptionID());
-                stm_op.setString(4, op.getValueName());
-                stm_op.executeUpdate();
-            }
-        
             
-//            String sql_images = "INSERT INTO [ProductImage]\n" +
-//                                "           ([ProductID]\n" +
-//                                "           ,[Image])\n" +
-//                                "     VALUES\n" +
-//                                "           (?\n" +
-//                                "           ,?)";
-//            for (ProductImages pi : p.getListImages()) {
-//                PreparedStatement stm_pi = connection.prepareStatement(sql_images);
-//                stm_pi.setInt(1, p.getProductID());
-//                stm_pi.setString(2, pi.getImage());
-//                stm_pi.executeUpdate();
-//            }
-//            
-//
-
-//            
-//            String sql_sku = "INSERT INTO [dbo].[SkuValues]\n" +
-//                            "           ([ProductID]\n" +
-//                            "           ,[SkuID]\n" +
-//                            "           ,[OptionID]\n" +
-//                            "           ,[ValueID]\n" +
-//                            "           ,[Quantity])\n" +
-//                            "     VALUES\n" +
-//                            "           (?\n" +
-//                            "           ,?\n" +
-//                            "           ,?\n" +
-//                            "           ,?\n" +
-//                            "           ,?)";
-//            for (SkuValue sk : p.getListSkuValues()) {
-//                PreparedStatement stm_sku = connection.prepareStatement(sql_sku);
-//                stm_sku.setInt(1, p.getProductID());
-//                stm_sku.setInt(2, sk.getSkuID());
-//                stm_sku.setInt(3, sk.getOptionID());
-//                stm_sku.setInt(4, sk.getValueID());
-//                stm_sku.setInt(5, sk.getQuantity());
-//                stm_sku.executeUpdate();
-//            }
-//            
+            int count=0;
+            for (Color c: p.getListColors()) {
+                for (Size s: p.getListSizes()) {
+                    PreparedStatement stm_color_size = connection.prepareStatement(sql_color_size);
+                    stm_color_size.setInt(1, p.getProductID());
+                    stm_color_size.setInt(2, c.getColorID());
+                    stm_color_size.setInt(3, s.getSizeID());
+                    stm_color_size.setInt(4, p.getQuantity().get(count));
+                    count+=1;
+                    stm_color_size.executeUpdate();
+                }    
+            }             
+         
             connection.commit();
         } catch (SQLException ex) {
             try {
@@ -213,8 +191,65 @@ public class ProductDBContext extends DBContext{
         } 
     }
     
-    public void getOneProduct(int id){
-        
+    public Product getOneProduct(int id){
+        try {
+            String sql="select *from Product where ProductID=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            Product p = new Product();
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                p.setProductID(rs.getInt("ProductID"));
+                p.setProductName(rs.getString("ProductName"));
+                p.setPrice(rs.getBigDecimal("Price"));
+                p.setQuantityPerUnit(rs.getInt("QuantityPerUnit"));
+                Category category = new Category();
+                category.setCategoryID(rs.getInt("CategoryID"));
+                p.setCategory(category);
+                p.setDescription(rs.getNString("Description"));
+                p.setRetailPrice(rs.getBigDecimal("RetailPrice"));                
+            }
+            
+            String sql_listImages = "select Image, ImageID from ProductImage where ProductID = ?";
+            PreparedStatement st_img = connection.prepareStatement(sql_listImages);
+            st_img.setInt(1, p.getProductID());
+            ArrayList<ProductImages> listImages = new ArrayList<>();
+            ResultSet rs_img = st_img.executeQuery();
+            while (rs_img.next()) {                    
+                ProductImages img = new ProductImages();
+                img.setImage(rs_img.getString("Image"));
+                img.setImageID(rs_img.getInt("ImageID"));
+                listImages.add(img);
+            }
+            p.setListImages(listImages); 
+            
+            String sql_color_size="select *from Quantity as a join Size as b on a.SizeID = b.SizeID and a.ProductID=b.ProductID\n" +
+"						   join Color as c on a.ProductID=c.ProductID and a.ColorID = c.ColorID\n" +
+"						   where a.ProductID=?";
+            PreparedStatement stm_color_size = connection.prepareStatement(sql_color_size);
+            stm_color_size.setInt(1, p.getProductID());
+            ResultSet rs_color_size = stm_color_size.executeQuery();
+            while(rs_color_size.next()){
+                Color c = new Color();
+                c.setColor(rs_color_size.getString("color"));
+                c.setColorID(rs_color_size.getInt("ColorID"));
+                Size s = new Size();
+                s.setSize(rs_color_size.getString("Size"));
+                s.setSizeID(rs_color_size.getInt("SizeID"));
+                Color_Size cs = new Color_Size();
+                cs.setColorID(rs_color_size.getInt("ColorID"));
+                cs.setQuantity(rs_color_size.getInt("Quantity"));
+                cs.setSizeID(rs_color_size.getInt("SizeID"));
+                p.getListColors().add(c);
+                p.getListSizes().add(s);
+                p.getListColor_Sizes().add(cs);
+            }
+            
+            return p;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
 }

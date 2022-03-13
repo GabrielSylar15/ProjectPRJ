@@ -4,17 +4,18 @@
     Author     : ADMIN
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+       <% request.setCharacterEncoding("UTF-8");%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
-        <form method="POST" enctype="multipart/form-data" action="product">
-            <input type="text" name="name"> <br>
-            <input type="file" name="image"></br>
+        <form method="POST" action="product">
+            Đẹp trai<input type="text" name="name"> <br>
             <input type="submit">
 
         </form>

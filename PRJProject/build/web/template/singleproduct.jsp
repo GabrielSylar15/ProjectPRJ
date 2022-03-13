@@ -1,7 +1,14 @@
+<%-- 
+    Document   : singleproduct
+    Created on : Mar 14, 2022, 1:25:54 AM
+    Author     : ADMIN
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <!doctype html>
-<html lang="zxx">
-
-
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -188,7 +195,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>product Details</h2>
+                            <h2>Chi tiết sản phẩm</h2>
                         </div>
                     </div>
                 </div>
@@ -216,11 +223,16 @@
         </div>
         <div class="col-lg-8">
           <div class="single_product_text text-center">
-            <h3>Foam filling cotton slow <br>
-                rebound pillows</h3>
+              <h3>${requestScope.product.productName}</h3>
             <p>
-                Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources. Credibly innovate granular internal or “organic” sources whereas high standards in web-readiness. Credibly innovate granular internal or organic sources whereas high standards in web-readiness. Energistically scale future-proof core competencies vis-a-vis impactful experiences. Dramatically synthesize integrated schemas. with optimal networks.
+               ${requestScope.product.description}
             </p>
+            <c:forEach items="${requestScope.product.listColor_Sizes}" var="cs">
+                <span>
+                    ${cs.colorID}  ${cs.sizeID} ||
+                </span>
+            </c:forEach>
+            
             <div class="card_area">
                 <div class="product_count_area">
                     <p>Quantity</p>

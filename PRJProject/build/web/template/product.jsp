@@ -4,14 +4,18 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Product"%>
+<%@page import="model.ProductImages"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eCommerce HTML-5 Template </title>
+    <title>Sản phẩm</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -36,7 +40,9 @@
         <link rel="stylesheet" href="../Homepage/grid.css">
         <link rel="stylesheet" href="../Homepage/home.css">
 </head>
-
+    <%
+        ArrayList<Product> listProducts = (ArrayList<Product>) request.getAttribute("listProducts");
+    %>
 <body>
 
     <header>
@@ -219,10 +225,9 @@
                             <div class="select_option">
                                 <div class="select_option_list">Danh mục sản phẩm<i class="right fas fa-caret-down"></i> </div>
                                 <div class="select_option_dropdown">
-                                    <p><a href="#">Category 1</a></p>
-                                    <p><a href="#">Category 2</a></p>
-                                    <p><a href="#">Category 3</a></p>
-                                    <p><a href="#">Category 4</a></p>
+                                    <c:forEach items="${requestScope.listCategories}" var="c">
+                                        <p><a href="#">${c.categoryName}</a></p>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -242,14 +247,18 @@
                 <div class="col-md-8 col-lg-9">
                     <div class="product_list">
                         <div class="row">
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product6.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Cervical pillow for airplane
-                                    car office nap pillow</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
+                           <%for (Product p : listProducts) {%>
+                                 <div class="col-lg-4 col-sm-12 col-md-6">
+                                     <img src="../<%=p.getListImages().get(0).getImage()%>" alt="" class="img-fluid">
+                                    <div class="single_product_item">
+                                        <h3> <a href="single-product.html"><%=p.getProductName()%></a> </h3>
+                                        <p><%=p.getPrice()%></p>
+                                    </div>
+                                </div>                            
+                           <%}%>
+                         
+  
+                            
                             <div class="col-lg-4 col-sm-12 col-md-6">
                                 <div class="single_product_item">
                                     <img src="assets/img/categori/product2.png" alt="" class="img-fluid">
@@ -292,27 +301,7 @@
                                     <p>From $5</p>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product3.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Sleeping orthopedic sciatica Back Hip Joint Pain relief</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product2.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Geometric striped flower home classy decor</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product1.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Geometric striped flower home classy decor</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="load_more_btn text-center">
                             <a href="#" class="btn_3">Load More</a>
