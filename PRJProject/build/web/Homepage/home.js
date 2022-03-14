@@ -82,6 +82,20 @@ function appearLogin(){
 
 appearLogin();
 
+
+function buyProduct(){
+  var sizes = document.querySelectorAll("size");
+  var colors = document.querySelectorAll("color");
+  for (let index = 0; index < sizes.length; index++) {
+    sizes[index].onclick = function(){
+      alert("hehe");
+    }    
+  }
+}
+
+buyProduct()
+
+
 // SlideShow Animation
 
 var elementowl = document.querySelector(".owl");
@@ -142,7 +156,4 @@ document.querySelector("body").onresize = responsiveSlide;
 // elementowl.ondrag = function(){
 //   console.log("hehe")
 // }
-
-
-
 

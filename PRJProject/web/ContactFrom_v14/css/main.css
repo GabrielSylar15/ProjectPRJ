@@ -515,5 +515,19 @@ textarea.input100 {
   }
 }
 
+.addedImage img{
+    width: 100%;
+}
+.wrapper-imageadded{
+    position: relative;
+}
 
-
+.removeImageAdded{
+    position: absolute;
+    border: 1px solid skyblue;
+    border-radius: 3px;
+    padding: 0px 4px;
+    top: 4px;
+    right: 3px;
+    color:red;
+}

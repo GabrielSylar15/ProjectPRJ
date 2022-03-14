@@ -51,7 +51,7 @@
 		<div class="wrap-contact100">
                     <form class="contact100-form validate-form" method="POST" action="insertproducts" enctype="multipart/form-data">
 				<span class="contact100-form-title">
-					Cập nhật sản phẩm
+					Thêm sản phẩm
 				</span>
 
 				<label class="label-input100" for="phone">Tên sản phẩm</label>

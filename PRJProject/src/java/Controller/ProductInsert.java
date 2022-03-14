@@ -22,6 +22,7 @@ import javax.servlet.http.Part;
 import static jdk.nashorn.internal.objects.NativeError.getFileName;
 import model.Category;
 import model.Color;
+import model.Color_Size;
 import model.Product;
 import model.ProductImages;
 import model.Size;
@@ -36,7 +37,7 @@ import model.Size;
         maxRequestSize      = 1024 * 1024 * 15,
         location = "D:\\WED201c\\HtmlPRJ\\ProjectPRJ\\PRJProject\\web\\uploads"// 15 MB
 )
-public class InsertProduct extends HttpServlet {
+public class ProductInsert extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -95,6 +96,9 @@ public class InsertProduct extends HttpServlet {
                 listSizes.add(x);                 
             } 
         }
+        
+        ArrayList<Color_Size> listColorSizes = new ArrayList<>();
+        
 
         for (Part part : parts) {
             if(part.getSubmittedFileName()!=null){
@@ -119,6 +123,10 @@ public class InsertProduct extends HttpServlet {
         }
         ProductDBContext productDBContext = new ProductDBContext();
         productDBContext.insertProduct(p);    
+        response.sendRedirect("../template/displayproducts"); 
+//        for (String raw_quantity : raw_quantities) {
+//            response.getWriter().println(raw_quantity);
+//        }
     }
 
     @Override

@@ -284,6 +284,7 @@
   var product_slide = $('.product_img_slide');
   if (product_slide.length) {
     product_slide.owlCarousel({
+      items: 1,
       loop: true,
       dots: true,
       autoplay: true,
@@ -294,20 +295,21 @@
       navText: [" <i class='ti-angle-left'></i> ", "<i class='ti-angle-right'></i> "],
       responsive: {
         0: {
-          items: 1,
           nav: false
         },
         768: {
-          items: 2,
           nav: false
         },
         991: {
-          items: 2,
           nav: true
         }
       }
     });
   }
+
+  $(window).load(function () {
+    $('.product_img_slide').trigger('refresh.owl.carousel')
+})
 
   //product list slider
   var product_list_slider = $('.product_list_slider');

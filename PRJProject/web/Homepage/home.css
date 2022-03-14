@@ -650,12 +650,6 @@ body .containerX{
     margin: auto;
 }
 
-
-
-
-
-
-
 .owl-button{
     display: flex;
     justify-content: space-between;
@@ -678,4 +672,24 @@ body .containerX{
 .owl-button i:hover{
     transition: all .3s ease-in-out;
     background-color: skyblue;
+}
+
+.single_product_text span.color,
+.single_product_text span.size{
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.wrapper-color{
+    margin-bottom: 36px;
+}
+
+.single_product_text span:hover{
+    cursor: pointer;
+    background-color: skyblue;
+}
+
+.product_list img{
+    border-radius: 5px;
 }

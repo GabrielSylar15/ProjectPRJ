@@ -251,7 +251,7 @@
                                  <div class="col-lg-4 col-sm-12 col-md-6">
                                      <img src="../<%=p.getListImages().get(0).getImage()%>" alt="" class="img-fluid">
                                     <div class="single_product_item">
-                                        <h3> <a href="single-product.html"><%=p.getProductName()%></a> </h3>
+                                        <h3> <a href="productdetail?pid=<%=p.getProductID()%>"><%=p.getProductName()%></a> </h3>
                                         <p><%=p.getPrice()%></p>
                                     </div>
                                 </div>                            

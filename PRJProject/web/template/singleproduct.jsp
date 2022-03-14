@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eCommerce HTML-5 Template </title>
+    <title>Chi tiết sản phẩm</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -207,46 +207,53 @@
   <!--================Single Product Area =================-->
   <div class="product_image_area">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-5">
           <div class="product_img_slide owl-carousel">
-            <div class="single_product_img">
-              <img src="assets/img/product/single_product.png" alt="#" class="img-fluid">
-            </div>
-            <div class="single_product_img">
-              <img src="assets/img/product/single_product.png" alt="#" class="img-fluid">
-            </div>
-            <div class="single_product_img">
-              <img src="assets/img/product/single_product.png" alt="#" class="img-fluid">
-            </div>
+              <c:forEach items="${requestScope.product.listImages}" var="img">
+                <div class="single_product_img">
+                    <img src="../${img.image}" alt="#" class="img-fluid">
+                </div>    
+              </c:forEach>
           </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-7">
           <div class="single_product_text text-center">
-              <h3>${requestScope.product.productName}</h3>
+            <h3>${requestScope.product.productName}</h3>
             <p>
                ${requestScope.product.description}
             </p>
-            <c:forEach items="${requestScope.product.listColor_Sizes}" var="cs">
-                <span>
-                    ${cs.colorID}  ${cs.sizeID} ||
-                </span>
-            </c:forEach>
-            
+            <div class="wrapper-color">
+                Màu sắc:
+                <c:forEach items="${requestScope.product.listColors}" var="c">
+                    <c:if test="${c.color!='None'}">
+                        <span class="color">${c.color}</span>   
+                    </c:if>
+                </c:forEach>
+            </div>
+            <div class="wrapper-size">
+                Size:
+                <c:forEach items="${requestScope.product.listSizes}" var="s">
+                    <c:if test="${s.size!='None'}">
+                            <span class="size" >${s.size}</span>  
+                    </c:if>
+                </c:forEach>            
+            </div>
             <div class="card_area">
                 <div class="product_count_area">
-                    <p>Quantity</p>
+                    <p style="text-align:left">Số lượng:</p>
                     <div class="product_count d-inline-block">
                         <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
                         <input class="product_count_item input-number" type="text" value="1" min="0" max="10">
                         <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
                     </div>
-                    <p>$5</p>
                 </div>
-              <div class="add_to_cart">
-                  <a href="#" class="btn_3">add to cart</a>
-              </div>
             </div>
+            <p style="text-align:left">Giá:${  requestScope.product.price}</p>  
+            <p style="text-align:left" id="instock"></p>
+            <div class="add_to_cart">
+              <a href="#" class="btn_3">Thêm vào giỏ hàng</a>
+            </div>        
           </div>
         </div>
       </div>
@@ -403,6 +410,73 @@
         <script src="./assets/js/waypoints.min.js"></script>
 
         <script src="../Homepage/home.js"></script>
-</body>
 
+       <!--<script src="BuyProduct.js"></script>-->
+</body>
+<script>
+    function product(colorID, sizeID, quantity){
+        this.colorID = colorID;
+        this.sizeID = sizeID;
+        this.quantity = quantity;
+    }
+    const listProducts = [];
+    <c:forEach items="${requestScope.product.listColor_Sizes}" var = "cs">
+        listProducts.push(new product(${cs.colorID}, ${cs.sizeID}, ${cs.quantity}))
+    </c:forEach>
+    var sizeindex,colorindex;
+    if(listProducts[0].colorID==0)  colorindex=0;
+    if(listProducts[0].sizeID==0)   sizeindex=0;
+    function ClickButton(){
+        var sizes = document.querySelectorAll(".size");
+        var colors = document.querySelectorAll(".color");
+        var temp=0;
+        sizes.forEach((element, index) => {
+            element.onclick = function(){
+                temp=index+1;
+                sizes.forEach(e => {
+                    e.setAttribute("style","background-color:none");
+                });
+                sizeindex=temp;
+                element.setAttribute("style","background-color:skyblue");
+                if(colorindex!=null){
+                    listProducts.forEach(p => {
+                        if(p.colorID==colorindex&&p.sizeID==sizeindex){
+                            document.getElementById("instock").innerHTML = p.quantity+" sản phẩm có sẵn";
+                        }
+                    });
+                }
+            }      
+        });
+        
+        colors.forEach((element, index) => {
+            element.onclick = function(){
+                temp=index+1;
+                colors.forEach(e => {
+                    e.setAttribute("style","background-color:none");
+                });
+                colorindex = temp;
+                element.setAttribute("style","background-color:skyblue");
+                if(sizeindex!=null){
+                    listProducts.forEach(p => {
+                        if(p.colorID==colorindex&&p.sizeID==sizeindex){
+                            document.getElementById("instock").innerHTML = p.quantity+" sản phẩm có sẵn";
+                        }
+                    });
+                }
+            }      
+        });
+    }
+    ClickButton(); 
+    document.querySelector(".btn_3").onclick = function(){
+        if(sizeindex==null||colorindex==null){
+            alert("Bạn cần chọn sản phẩm cần mua");
+        }
+        else{
+            var xttp = new XMLHttpRequest();
+            console.log(colorindex, sizeindex)
+        }
+        
+    }
+
+</script>
 </html>

@@ -13020,3 +13020,27 @@ input:focus {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.single_product_text{
+  margin-top: 0px !important;
+}
+
+.card_area,
+.add_to_cart{
+  margin: 8px !important;
+
+}
+
+.wrapper-color,
+.wrapper-size{
+  text-align: left;
+  margin: 0px;
+}
+.card_area .product_count_area{
+  margin-top: 32px;
+  justify-content: left;
+}
+
+.single_product_text p{
+  margin: 16px 0px 16px 0px!important;
+}

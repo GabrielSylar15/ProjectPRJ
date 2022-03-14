@@ -51,12 +51,12 @@
 		<div class="wrap-contact100">
                     <form class="contact100-form validate-form" method="POST" action="insertproducts" enctype="multipart/form-data">
 				<span class="contact100-form-title">
-					Thêm sản phẩm
+					Cập nhật sản phẩm
 				</span>
 
-				<label class="label-input100" for="phone">Tên sản phẩm</label>
+                                <label class="label-input100" for="phone">Tên sản phẩm</label>
 				<div class="wrap-input100">
-					<input id="phone" class="input100" type="text" name="name" placeholder="Tên sản phẩm">
+					<input id="phone" class="input100" type="text" name="name" placeholder="Tên sản phẩm" value="${requestScope.product.productName}">
 					<span class="focus-input100"></span>
 				</div>
 
@@ -64,42 +64,55 @@
 				<div class="wrap-input100">
 					<select name="category">
                                             <c:forEach items="${requestScope.listCategories}" var="category">
-                                                <option value="${category.categoryID}">${category.categoryName}</option>
+                                                <option value="${category.categoryID}"
+                                                        <c:if test="${category.categoryID==requestScope.product.category.categoryID}">
+                                                            selected
+                                                        </c:if>
+                                                >${category.categoryName}</option>
                                             </c:forEach>
 					</select>
 				</div>	
-				<label c
-				lass="label-input100" for="phone">Giá</label>
+				<label class="label-input100" for="phone">Giá</label>
 				<div class="wrap-input100">
-					<input id="phone" class="input100" type="text" name="price" placeholder="Giá sản phẩm">
+					<input id="phone" class="input100" type="text" name="price" placeholder="Giá sản phẩm" value="${requestScope.product.price}">
 					<span class="focus-input100"></span>
 				</div>
 
 				<label class="label-input100" for="phone">Số lượng trên 1 đơn vị</label>
 				<div class="wrap-input100">
-					<input id="phone" class="input100" type="text" name="QuantityPerUnit" placeholder="Eg. 5">
+					<input id="phone" class="input100" type="text" name="QuantityPerUnit" placeholder="Eg. 5" value="${requestScope.product.quantityPerUnit}">
 					<span class="focus-input100"></span>
 				</div>
 				<label class="label-input100" for="phone">Giá bán ra</label>
 				<div class="wrap-input100">
-					<input id="phone" class="input100" type="text" name="retailprice" placeholder="Eg. 15000">
+                                    <input id="phone" class="input100" type="text" name="retailprice" placeholder="Eg. 15000" value="${requestScope.product.retailPrice}">
 					<span class="focus-input100"></span>
 				</div>
 
 				<label class="label-input100" for="message">Miêu tả sản phẩm</label>
 				<div class="wrap-input100">
-					<textarea id="message" class="input100" name="description" placeholder="Sản phẩm này có màu..."></textarea>
+					<textarea id="message" class="input100" name="description" placeholder="Sản phẩm này có màu...">${requestScope.product.description}</textarea>
 					<span class="focus-input100"></span>
 				</div>
-
 				<label class="label-input100" for="message">Ảnh sản phẩm</label>
 				<div class="wrap-input100" id="UploadImage">
-					<div class="wrapper-image">
-						<input id="phone" class="input100" type="file" name="image"> 
-					</div>				
+                                    <div class="wrapper-image">
+                                            <input id="phone" class="input100" type="file" name="image"> 
+                                    </div>				
 				</div>				
 				<button id="AddMoreImage" type="button">Thêm ảnh+</button>
-
+                                
+                                <label class="label-input100" for="message">Ảnh đã thêm</label>                               
+                                <div class="addedImage" style="display:flex">
+                                    <c:forEach items="${requestScope.product.listImages}" var="img">                                   
+                                        <div class="wrapper-imageadded">
+                                            <img src="../${img.image}">
+                                            <button type="button" class="removeImageAdded">x</button>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                
+                                
 				<label class="label-input100" for="message">Phân loại theo</label>
 				<div class="wrapper--sku wrap-input100">
 					<label class="label-input100" for="message">Màu sắc</label>
@@ -152,6 +165,7 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+        <script src="js/removeimageadded.js"></script>
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
