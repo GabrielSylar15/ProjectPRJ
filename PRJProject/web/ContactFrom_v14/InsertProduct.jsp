@@ -111,21 +111,24 @@
 					<div class="smallblock--size">
 					</div>
 					<button class="AddMoreSku" type="button">Thêm +</button>
+                      <button type="button" class="apply">Áp dụng</button>
 				</div>
 				
 
 				<label class="label-input100" for="message">Nhập số lượng</label>				
 				<div class="tableQuantity">
-						<div class="wrap-input100 sku--size">
-							<input id="phone" class="input100" type="text" name="quantity" placeholder="Eg. 100">
-						</div>
+						<table border="1px solid black">
+							<tbody class="drawtable">
+								<td><input type="text" name="quantity" class="quantity"></td>	   
+							</tbody>
+						</table>
 				</div>
 
 
 				<div class="container-contact100-form-btn">
 					<button class="contact100-form-btn">
 						<span>
-							Submit
+							Thêm sản phẩm
 							<i class="zmdi zmdi-arrow-right m-l-8"></i>
 						</span>
 					</button>
@@ -153,14 +156,17 @@
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
-
+    <script src="js/removeimageadded.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
+   document.querySelector(".apply").onclick = function(){
+        addMore();
+	}
+	console.log(document.querySelector(".apply"))
   gtag('config', 'UA-23581568-13');
 </script>
 

@@ -293,7 +293,8 @@ public class ProductDBContext extends DBContext{
             
             String sql_del_img="DELETE FROM [ProductImage]\n" +
                                 "      WHERE ProductID=?";
-            PreparedStatement st_del_img = connection.prepareStatement(sql);
+            PreparedStatement st_del_img = connection.prepareStatement(sql_del_img);
+            st_del_img.setInt(1, p.getProductID());
             st_del_img.executeUpdate();
             
             String sql_images = "INSERT INTO [ProductImage]\n" +
@@ -312,43 +313,22 @@ public class ProductDBContext extends DBContext{
             String sql_del_cs="DELETE FROM [Quantity]\n" +
                         "      WHERE ProductID=?";
             PreparedStatement st_del_cs = connection.prepareStatement(sql_del_cs);
-            st_del_cs.execute();
+            st_del_cs.setInt(1, p.getProductID());
+            st_del_cs.executeUpdate();
             
             String sql_del_size = "DELETE FROM	[Size]\n" +
                                 "      WHERE ProductID=?";
             PreparedStatement st_del_size = connection.prepareStatement(sql_del_size);
-            st_del_size.executeQuery();
+            st_del_size.setInt(1,p.getProductID());
+            st_del_size.executeUpdate();
             
             String sql_del_color = "DELETE FROM [Color]\n" +
                                 "      WHERE ProductID=?";
             PreparedStatement st_del_color = connection.prepareStatement(sql_del_color);
-            st_del_color.executeQuery();
+            st_del_color.setInt(1, p.getProductID());
+            st_del_color.executeUpdate();
             
-            String sql_color_size = "INSERT INTO [Quantity]\n" +
-                                    "           ([ProductID]\n" +
-                                    "           ,[ColorID]\n" +
-                                    "           ,[SizeID]\n" +
-                                    "           ,[Quantity])\n" +
-                                    "     VALUES\n" +
-                                    "           (?\n" +
-                                    "           ,?\n" +
-                                    "           ,?\n" +
-                                    "           ,?)";
-            
-            int count=0;
-            for (Size s: p.getListSizes()) {
-                for (Color c: p.getListColors()) {
-                    PreparedStatement stm_color_size = connection.prepareStatement(sql_color_size);
-                    stm_color_size.setInt(1, p.getProductID());
-                    stm_color_size.setInt(2, c.getColorID());
-                    stm_color_size.setInt(3, s.getSizeID());
-                    stm_color_size.setInt(4, p.getQuantity().get(count));
-                    count+=1;
-                    stm_color_size.executeUpdate();
-                }    
-            }        
-            
-            String sql_size="INSERT INTO [Size]\n" +
+             String sql_size="INSERT INTO [Size]\n" +
                             "           ([SizeID]\n" +
                             "           ,[ProductID]\n" +
                             "           ,[Size])\n" +
@@ -378,7 +358,28 @@ public class ProductDBContext extends DBContext{
                 stm_color.setInt(2, p.getProductID());
                 stm_color.setNString(3, c.getColor());
                 stm_color.executeUpdate();
-            }                
+            }               
+            
+            String sql_color_size = "INSERT INTO [Quantity]\n" +
+                                    "           ([ProductID]\n" +
+                                    "           ,[ColorID]\n" +
+                                    "           ,[SizeID]\n" +
+                                    "           ,[Quantity])\n" +
+                                    "     VALUES\n" +
+                                    "           (?\n" +
+                                    "           ,?\n" +
+                                    "           ,?\n" +
+                                    "           ,?)";
+            
+            for (Color_Size cs: p.getListColor_Sizes()) {
+                PreparedStatement stm_color_size = connection.prepareStatement(sql_color_size);
+                stm_color_size.setInt(1, p.getProductID());
+                stm_color_size.setInt(2, cs.getColorID());
+                stm_color_size.setInt(3, cs.getSizeID());
+                stm_color_size.setInt(4, cs.getQuantity());
+                stm_color_size.executeUpdate();      
+            }        
+                        
             connection.commit();              
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);

@@ -13044,3 +13044,7 @@ input:focus {
 .single_product_text p{
   margin: 16px 0px 16px 0px!important;
 }
+
+.table th:last-child{
+  width: 150px;
+}

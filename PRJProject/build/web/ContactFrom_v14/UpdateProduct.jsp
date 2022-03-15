@@ -42,18 +42,167 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,900&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@100;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@100;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Homepage/base.css">
+<link rel="stylesheet" href="../Homepage/grid.css">
+<link rel="stylesheet" href="../Homepage/home.css">
 </head>
 <body>
+    <header>
+        <div class="header__largescreen">
+            <div class="header__ann">
+                <p>Sản phẩm abcxyz đã tăng giá lên 50%, mọi người chú ý💥 Sản phẩm abc đã tăng giá lên 50%, mọi người chú ý💥 </p>
+             </div>
+             <div class="header row">
+                 <div class="header__logo lg-2 md-2">
+                     <img src="../Homepage/assets/img/pngtree-human-feet-icon-flat-style-png-image_1809427.jpg" alt="">
+                  
+                     <a href="">Shop giày dép</a>
+                 </div>
+                 <div class="header__navigation lg-6 md-6">
+                     <ul>
+                         <li>
+                             <a href="">Trang chủ</a>
+                         </li>
+                         <li>
+                             <a href="..template/listproduct.jsp">Giày</a>
+                         </li>
+                         <li>
+                             <a href="">Dép</a>
+                         </li>
+                         <li class="parent">
+                             <a href="#">Phụ kiện</a>
+                             <ul class="child">
+                                 <li>
+                                     <a href="#">Áo mưa</a>
+                                 </li>
+                                 <li>
+                                     <a href="#">Gang tay</a>
+                                 </li>
+                                 <li>
+                                     <a href="#">Quần ủng</a>
+                                 </li>
+                                 <li>
+                                     <a href="#">Khác</a>
+                                 </li>
+                                 <li>
+                                     <a href="">Khác nữa</a>
+                                 </li>
+                             </ul>
+                         </li>
+                         <li>    
+                             <a href="">Liên hệ</a>
+                         </li>
+                     </ul>
+                 </div>
+                 <div class="header__tool lg-4 md-4">
+                     <ul>
+                         <li class="search">
+                             <div class="search__bigscreen">
+                                 <input type="text" placeholder="Tìm kiếm...">
+                                 <i class="fa-solid fa-magnifying-glass"></i> 
+                             </div>
+                         </li>
+                         <li class="cart">
+                             <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                         </li>
+                         <!-- <li class="login"><a href="../">Đăng Nhập</a></li> -->
+                         <li class="cart">                        
+                            <a href="#" class="user">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                            <div class="expand-infor">
+                                <a href=""><i class="fa-solid fa-user-large"></i> Nguyễn Thế Vinh</a> 
+                                <a href="">VinhNT</a>
+                                <a href="">Đơn hàng đã mua</a>
+                                <a href="">Đặt trước</a>
+                            </div>
+                        </li>
+                     </ul>
+                 </div>
+             </div>
+        </div>
 
+        <div class="col-12 mobile__header">
+            <ul class="header__mobile--nav">
+                <li class="header__logo">
+                    <img src="../Homepage/assets/img/pngtree-human-feet-icon-flat-style-png-image_1809427.jpg" alt="">
+                    <a href="">Shop giày dép</a>
+                </li> 
+
+                <li class="cart">
+                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                </li>
+
+                <li class="header__bar">
+                    <i class="fa-solid fa-bars"></i>
+                </li>
+            </ul>
+
+            <ul class="mobile__nav">
+                <li>
+                    <div class="mobile__search">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <i class="fa-solid fa-magnifying-glass"></i> 
+                    </div>
+                </li>
+                <li>
+                    <a href="">Trang chủ</a>
+                </li>
+                <li>
+                    <a href="">Giày</a>
+                </li>
+                <li>
+                    <a href="">Dép</a>
+                    <!-- <ul class="child">
+                        <li>
+                            <a href="">Dép tổ ong</a>
+                        </li>
+                        <li>
+                            <a href="">Dép tổ ong</a>
+                        </li>
+                        <li>
+                            <a href="">Dép tổ ong</a>      
+                        </li>
+                    </ul> -->
+                </li>
+                <li class="parent">
+                    <a href="#">Phụ kiện</a>
+                    <ul class="child">
+                        <li>
+                            <a href="#">Áo mưa</a>
+                        </li>
+                        <li>
+                            <a href="#">Gang tay</a>
+                        </li>
+                        <li>
+                            <a href="#">Quần ủng</a>
+                        </li>
+                        <li>
+                            <a href="#">Khác</a>
+                        </li>
+                        <li>
+                            <a href="">Khác nữa</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">Liên hệ</a>
+                </li>
+                <li><a href="">Đăng Nhập</a></li>
+            </ul>
+
+        </div>
+    </header>
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-                    <form class="contact100-form validate-form" method="POST" action="insertproducts" enctype="multipart/form-data">
+                    <form class="contact100-form validate-form" method="POST" action="update" enctype="multipart/form-data">
 				<span class="contact100-form-title">
 					Cập nhật sản phẩm
 				</span>
-
+                                <input type="hidden" name="productID" value="${requestScope.product.productID}">
                                 <label class="label-input100" for="phone">Tên sản phẩm</label>
 				<div class="wrap-input100">
 					<input id="phone" class="input100" type="text" name="name" placeholder="Tên sản phẩm" value="${requestScope.product.productName}">
@@ -63,13 +212,13 @@
 				<label class="label-input100" for="message" name="category">Loại sản phẩm:</label>
 				<div class="wrap-input100">
 					<select name="category">
-                                            <c:forEach items="${requestScope.listCategories}" var="category">
-                                                <option value="${category.categoryID}"
-                                                        <c:if test="${category.categoryID==requestScope.product.category.categoryID}">
-                                                            selected
-                                                        </c:if>
-                                                >${category.categoryName}</option>
-                                            </c:forEach>
+                        <c:forEach items="${requestScope.listCategories}" var="category">
+                            <option value="${category.categoryID}"
+                                    <c:if test="${category.categoryID==requestScope.product.category.categoryID}">
+                                        selected
+                                    </c:if>
+                            >${category.categoryName}</option>
+                        </c:forEach>
 					</select>
 				</div>	
 				<label class="label-input100" for="phone">Giá</label>
@@ -85,7 +234,7 @@
 				</div>
 				<label class="label-input100" for="phone">Giá bán ra</label>
 				<div class="wrap-input100">
-                                    <input id="phone" class="input100" type="text" name="retailprice" placeholder="Eg. 15000" value="${requestScope.product.retailPrice}">
+                    <input id="phone" class="input100" type="text" name="retailprice" placeholder="Eg. 15000" value="${requestScope.product.retailPrice}">
 					<span class="focus-input100"></span>
 				</div>
 
@@ -96,49 +245,71 @@
 				</div>
 				<label class="label-input100" for="message">Ảnh sản phẩm</label>
 				<div class="wrap-input100" id="UploadImage">
-                                    <div class="wrapper-image">
-                                            <input id="phone" class="input100" type="file" name="image"> 
-                                    </div>				
+                    <div class="wrapper-image">
+                        <input id="phone" class="input100" type="file" name="image"> 
+                    </div>				
 				</div>				
 				<button id="AddMoreImage" type="button">Thêm ảnh+</button>
                                 
-                                <label class="label-input100" for="message">Ảnh đã thêm</label>                               
-                                <div class="addedImage" style="display:flex">
-                                    <c:forEach items="${requestScope.product.listImages}" var="img">                                   
-                                        <div class="wrapper-imageadded">
-                                            <img src="../${img.image}">
-                                            <button type="button" class="removeImageAdded">x</button>
-                                        </div>
-                                    </c:forEach>
-                                </div>
+                <label class="label-input100" for="message">Ảnh đã thêm</label>                               
+                <div class="addedImage" style="display:flex">
+                    <c:forEach items="${requestScope.product.listImages}" var="img">                                   
+                        <div class="wrapper-imageadded">
+                            <img src="../${img.image}">
+                            <input type="hidden" name="imagedeltedid" value="${img.imageID}">
+                            <input type="hidden" name="imagedeltedname" value="${img.image}">
+                            <button type="button" class="removeImageAdded">x</button>
+                        </div>
+                    </c:forEach>
+                </div>
                                 
                                 
 				<label class="label-input100" for="message">Phân loại theo</label>
 				<div class="wrapper--sku wrap-input100">
 					<label class="label-input100" for="message">Màu sắc</label>
 					<div class="smallblock--color">
+                                            <c:forEach items="${requestScope.product.listColors}" var="c"> 
+                                                <c:if test="${c.color!='None'}">
+                                                    <div class="wrap-input100 sku--color">
+                                                        <input type="text" class="input100 color" name="color" value="${c.color}">
+                                                        <button class="RemoveSKU">x</button>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
 					</div>
-
+                   
 					<button class="AddMoreSku" type="button">Thêm +</button>
+
 					<label class="label-input100" for="message">Kích thước</label>
 					<div class="smallblock--size">
-					</div>
+                                            <c:forEach items="${requestScope.product.listSizes}" var="s"> 
+                                                <c:if test="${s.size!='None'}">
+                                                    <div class="wrap-input100 sku--size">
+                                                        <input type="text" class="input100 size" name="size" value="${s.size}">
+                                                        <button class="RemoveSKU">x</button>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+					</div>                
 					<button class="AddMoreSku" type="button">Thêm +</button>
+                                        <button type="button" class="apply">Áp dụng</button>
 				</div>
-				
+				<label class="label-input100" for="message">Lưu ý: Khí ấn "Áp dụng", số lượng sẽ phải nhập lại từ đầu.</label>
 
 				<label class="label-input100" for="message">Nhập số lượng</label>				
 				<div class="tableQuantity">
-						<div class="wrap-input100 sku--size">
-							<input id="phone" class="input100" type="text" name="quantity" placeholder="Eg. 100">
-						</div>
+                 
+                    <table border="1px solid black">
+                        <tbody class="drawtable">
+                           
+                        </tbody>
+                    </table>
 				</div>
-
 
 				<div class="container-contact100-form-btn">
 					<button class="contact100-form-btn">
 						<span>
-							Submit
+							Cập nhật sản phẩm
 							<i class="zmdi zmdi-arrow-right m-l-8"></i>
 						</span>
 					</button>
@@ -164,8 +335,9 @@
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
+	<script src="../Homepage/home.js"></script>
 	<script src="js/main.js"></script>
-        <script src="js/removeimageadded.js"></script>
+    <script src="js/removeimageadded.js"></script>
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -176,6 +348,59 @@
   gtag('js', new Date());
 
   gtag('config', 'UA-23581568-13');
+  
+    function product(colorID, sizeID, quantity){
+        this.colorID = colorID;
+        this.sizeID = sizeID;
+        this.quantity = quantity;
+    }
+    const listProducts = [];
+    <c:forEach items="${requestScope.product.listColor_Sizes}" var = "cs">
+        listProducts.push(new product(${cs.colorID}, ${cs.sizeID}, ${cs.quantity}))
+    </c:forEach>
+
+    function color(colorID, color){
+        this.colorID = colorID;
+        this.color = color;
+    }
+    const listColors = [];
+    function size(sizeID, size){
+        this.size = size;
+        this.sizeID = sizeID;
+    }
+    const listSizes = [];
+    
+    <c:forEach items="${requestScope.product.listColors}" var = "c">
+        listColors.push(new color(${c.colorID}, '${c.color}'))
+    </c:forEach>
+
+    <c:forEach items="${requestScope.product.listSizes}" var = "s">
+        listSizes.push(new size(${s.sizeID}, '${s.size}'))
+    </c:forEach>
+     
+//    listColors.forEach(element => {
+//        document.querySelector(".smallblock--color").innerHTML+='<div class="wrap-input100 sku--color">
+//        <input type="text" class="input100 color" name="color" value="'+element.color+'">
+//        <button class="RemoveSKU">x</button>
+//        </div>'
+//    });
+//    
+//    listSizes.forEach(element => {
+//        document.querySelector(".smallblock--size").innerHTML+='<div class="wrap-input100 sku--size"><input type="text" class="input100 size" name="size" value="'+element.size+'"><button class="RemoveSKU">x</button></div>'
+//    });    
+
+    window.onload = function(){
+        drawTableBeta(listProducts, 0);
+        document.querySelectorAll(".RemoveSKU").forEach(element => {
+            element.onclick = function(){
+                element.type="button";
+                element.parentElement.remove();    
+            }
+        });
+    }
+    document.querySelector(".apply").onclick = function(){
+        addMore();
+    }
 </script>
 
 </body>

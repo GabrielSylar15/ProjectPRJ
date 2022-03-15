@@ -100,6 +100,7 @@ function updateSKU(){
     for (let index = 0; index < ButtonAddSku.length; index++) {
         ButtonAddSku[index].onclick = function(){
             var ButtonRemoveSKU = document.createElement("button");
+            ButtonRemoveSKU.type="button";
             ButtonRemoveSKU.classList.add("RemoveSKU");
             var wrapper_sku = document.createElement("div");
             var node = document.createTextNode("x");
@@ -122,15 +123,12 @@ function updateSKU(){
                 wrapper_sku.appendChild(InputTag);
                 wrapper_sku.appendChild(ButtonRemoveSKU);
                 wrapper_sku.classList.add("sku--size");
-                document.querySelector(".smallblock--size").appendChild(wrapper_sku);              
+                document.querySelector(".smallblock--size").appendChild(wrapper_sku);     
             }
 
             ButtonRemoveSKU.onclick = function(){
                 wrapper_sku.remove();
-                drawTable();
             }
-            drawTable();
-            updateProperties();
         }     
     }
 }
@@ -138,60 +136,95 @@ function updateSKU(){
 updateSKU();
 
 // Draw Table and InputSize
-function drawTable(){
-    var table = document.querySelector(".tableQuantity");
-    var colors = document.querySelectorAll(".color");
-    var sizes = document.querySelectorAll(".size");
-    var colortable="", sizetable="";
-    if(colors.length!=0&&sizes.length!=0)   colortable += "<thead><tr><th>CvsS</th>"; 
-    if(sizes.length==0&&colors.length==0){
-        table.innerHTML='<div class="wrap-input100 sku--size"><input id="phone" class="input100" type="text" name="quantity" placeholder="Eg. 100"></div>'
-    }else{
+// function drawTable(){
+//     var table = document.querySelector(".tableQuantity");
+//     var colors = document.querySelectorAll(".color");
+//     var sizes = document.querySelectorAll(".size");
+//     var colortable="", sizetable="";
+//     if(colors.length!=0&&sizes.length!=0)   colortable += "<thead><tr><td>CvsS</td>"; 
+//     if(sizes.length==0&&colors.length==0){
+//         table.innerHTML='<div class="wrap-input100 sku--size"><input id="phone" class="input100" type="text" name="quantity" placeholder="Eg. 100"></div>'
+//     }else{
 
-        if(sizes.length!=0&&colors.length==0){
-            for (let index = 0; index < sizes.length; index++) {
-                colortable += `<tr>`;
-                colortable += `<th>${sizes[index].value}</th>`;
-                colortable += `<th><input type="text" value="" name="quantity"></th>`;
-                colortable += `</tr>`;
-            }
-        }else if(sizes.length!=0&&colors.length!=0){
-            for (let index = 0; index < colors.length; index++) {
-                colortable += `<th>${colors[index].value}</th>`;
-            }
-        }
+//         if(sizes.length!=0&&colors.length==0){
+//             for (let index = 0; index < sizes.length; index++) {
+//                 colortable += `<tr>`;
+//                 colortable += `<td>${sizes[index].value}</td>`;
+//                 colortable += `<td><input type="text" value="" name="quantity" class="quantity"></td>`;
+//                 colortable += `</tr>`;
+//             }
+//         }else if(sizes.length!=0&&colors.length!=0){
+//             for (let index = 0; index < colors.length; index++) {
+//                 colortable += `<td>${colors[index].value}</td>`;
+//             }
+//         }
 
-        colortable+="</tr></thead>";
-        if(sizes.length==0&&colors.length!=0){
-            sizetable+= '<tr>';
-            for (let index = 0; index < colors.length; index++) {
-                sizetable += `<tr>`;
-                sizetable += `<th>${colors[index].value}</th>`;
-                sizetable+='<th><input type="text" value="" name="quantity"></th>';
-                sizetable += `</tr>`;
-            }
-            sizetable+="</tr>";
-        }
-        else if(sizes.length!=0&&colors.length!=0){
-            for (let i = 0; i < sizes.length; i++) {
-                sizetable+=  `<tr><td>${sizes[i].value}</td>`
-                for (let j = 0; j < colors.length; j++) {
-                    sizetable+=`<td><input type="text" value="" name="quantity"></td>`;
+//         colortable+="</tr></thead>";
+//         if(sizes.length==0&&colors.length!=0){
+//             sizetable+= '<tr>';
+//             for (let index = 0; index < colors.length; index++) {
+//                 sizetable += `<tr>`;
+//                 sizetable += `<td>${colors[index].value}</td>`;
+//                 sizetable+='<td><input type="text" value="" name="quantity" class="quantity"></td>';
+//                 sizetable += `</tr>`;
+//             }
+//             sizetable+="</tr>";
+//         }
+//         else if(sizes.length!=0&&colors.length!=0){
+//             for (let i = 0; i < sizes.length; i++) {
+//                 sizetable+=  `<tr><td>${sizes[i].value}</td>`
+//                 for (let j = 0; j < colors.length; j++) {
+//                     sizetable+=`<td><input type="text" value="" name="quantity" class="quantity"></td>`;
+//                 }
+//                 sizetable+="</tr>";
+//             }
+//         }
+//         table.innerHTML = `<table border="1">${colortable}${sizetable}</table>`;
+//     }
+// }
+
+function addMore(){
+    var wrapper = document.querySelector(".drawtable")
+    // wrapper.innerHTML="";
+    var color = document.querySelectorAll(".color");
+    var size = document.querySelectorAll(".size");
+    var result="";
+    if(color.length>0&&size.length>0){
+        color.forEach(element => {
+            result+=`<tr>
+                        <td rowspan="${size.length}">${element.value}</td>`;
+            size.forEach((e,index) => {
+                if(index==0){
+                    result+=`<td>${e.value}</td>
+                            <td><input type="text" name="quantity" class="quantity"></td>
+                            </tr>`;
+                }else{
+                    result+=`<tr>
+                        <td>${e.value}</td>
+                        <td><input type="text" name="quantity" class="quantity"></td>
+                        </tr>`;
                 }
-                sizetable+="</tr>";
-            }
-        }
-        table.innerHTML = `<table border="1">${colortable}${sizetable}</table>`;
+            });
+        });
+    }else if(color.length==0&&size.length==0){
+        result+=`<tr><td><input type="text" name="quantity" class="quantity"><td></tr>`;
+    }else{
+        color.forEach(element => {
+            result+=
+            `<tr>
+                <td>${element.value}</td>
+                <td><input type="text" name="quantity" class="quantity"></td>
+                </tr>`;
+        });
+
+        size.forEach(element => {
+            result+=
+            `<tr>
+                <td>${element.value}</td>
+                <td><input type="text" name="quantity" class="quantity" ></td>
+                </tr>`;
+        });
     }
+    wrapper.innerHTML=result;
 }
 
-
-function updateProperties(){
-    var inputElements = document.querySelectorAll(".wrapper--sku input");
-    for (let index = 0; index < inputElements.length; index++) {
-        inputElements[index].oninput = function(){
-            drawTable();  
-        }  
-    }
-}
-// updateProperties()

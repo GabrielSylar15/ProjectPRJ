@@ -16,6 +16,10 @@
         <servlet-name>ProductUpdate</servlet-name>
         <servlet-class>Controller.ProductUpdate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>Controller.CartController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ContactFrom_v14/insertproducts</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>ProductUpdate</servlet-name>
         <url-pattern>/ContactFrom_v14/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/template/cart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
