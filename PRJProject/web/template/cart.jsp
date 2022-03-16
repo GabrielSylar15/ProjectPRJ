@@ -1,6 +1,13 @@
-<!doctype html>
-<html lang="zxx">
+<%-- 
+    Document   : cart
+    Created on : Mar 16, 2022, 5:53:13 PM
+    Author     : ADMIN
+--%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<html lang="zxx">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -36,152 +43,174 @@
 
 <body>
 
-  <header>
-    <div class="header__largescreen">
-        <div class="header__ann">
-            <p>Sản phẩm abcxyz đã tăng giá lên 50%, mọi người chú ý💥 Sản phẩm abc đã tăng giá lên 50%, mọi người chú ý💥 </p>
-         </div>
-         <div class="header row">
-             <div class="header__logo lg-2 md-2">
-                 <img src="../Homepage/assets/img/pngtree-human-feet-icon-flat-style-png-image_1809427.jpg" alt="">
-              
-                 <a href="">Shop giày dép</a>
-             </div>
-             <div class="header__navigation lg-6 md-6">
-                 <ul>
-                     <li>
-                         <a href="">Trang chủ</a>
-                     </li>
-                     <li>
-                         <a href="..template/listproduct.jsp">Giày</a>
-                     </li>
-                     <li>
-                         <a href="">Dép</a>
-                     </li>
-                     <li class="parent">
-                         <a href="#">Phụ kiện</a>
-                         <ul class="child">
+        <header>
+            <div class="header__largescreen">
+                <div class="header__ann">
+                    <p>Sản phẩm abcxyz đã tăng giá lên 50%, mọi người chú ý</p>
+                 </div>
+                 <div class="header row">
+                     <div class="header__logo lg-2 md-2">
+                         <img src="../Homepage/assets/img/pngtree-human-feet-icon-flat-style-png-image_1809427.jpg" alt="">
+                         <a href="">Shop giày dép</a>
+                     </div>
+                     <div class="header__navigation lg-6 md-6">
+                         <ul>
                              <li>
-                                 <a href="#">Áo mưa</a>
+                                 <a href="#">Trang chủ</a>
+                             </li>
+                             <c:if test="${sessionScope.account.isAdmin}">
+                                <li class="parent">
+                                    <a href="">Quản lý</a>
+                                    <ul class="child">
+                                        <li>
+                                            <a href="">Đơn hàng</a>
+                                        </li>
+                                        <li>
+                                            <a href="">Sản phẩm</a>
+                                        </li>                                     
+                                    </ul>
+                                </li>
+                             </c:if>
+                             <li>
+                                 <a href="../template/displayproducts">Giày</a>
                              </li>
                              <li>
-                                 <a href="#">Gang tay</a>
+                                 <a href="">Dép</a>
                              </li>
-                             <li>
-                                 <a href="#">Quần ủng</a>
+                             <li class="parent">
+                                 <a href="#">Phụ kiện</a>
+                                 <ul class="child">
+                                     <li>
+                                         <a href="#">Áo mưa</a>
+                                     </li>
+                                     <li>
+                                         <a href="#">Gang tay</a>
+                                     </li>
+                                     <li>
+                                         <a href="#">Quần ủng</a>
+                                     </li>
+                                     <li>
+                                         <a href="#">Khác</a>
+                                     </li>
+                                     <li>
+                                         <a href="">Khác nữa</a>
+                                     </li>
+                                 </ul>
                              </li>
-                             <li>
-                                 <a href="#">Khác</a>
-                             </li>
-                             <li>
-                                 <a href="">Khác nữa</a>
+                             <li>    
+                                 <a href="">Liên hệ</a>
                              </li>
                          </ul>
-                     </li>
-                     <li>    
-                         <a href="">Liên hệ</a>
-                     </li>
-                 </ul>
-             </div>
-             <div class="header__tool lg-4 md-4">
-                 <ul>
-                     <li class="search">
-                         <div class="search__bigscreen">
-                             <input type="text" placeholder="Tìm kiếm...">
-                             <i class="fa-solid fa-magnifying-glass"></i> 
-                         </div>
-                     </li>
-                     <li class="cart">
-                         <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
-                     </li>
-                     <!-- <li class="login"><a href="../">Đăng Nhập</a></li> -->
-                     <li class="cart">                        
-                        <a href="#" class="user">
-                            <i class="fa-solid fa-user"></i>
-                        </a>
-                        <div class="expand-infor">
-                            <a href=""><i class="fa-solid fa-user-large"></i> Nguyễn Thế Vinh</a> 
-                            <a href="">VinhNT</a>
-                            <a href="">Đơn hàng đã mua</a>
-                            <a href="">Đặt trước</a>
-                        </div>
-                    </li>
-                 </ul>
-             </div>
-         </div>
-    </div>
+                     </div>
+                     <div class="header__tool lg-4 md-4">
+                         <ul>
+                             <li class="search">
+                                 <div class="search__bigscreen">
+                                     <input type="text" placeholder="Tìm kiếm...">
+                                     <i class="fa-solid fa-magnifying-glass"></i> 
+                                 </div>
+                             </li>
+                             <li class="cart">
+                                 <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                             </li>
+                             <c:if test="${sessionScope.account==null}">
+                                <li class="login">
+                                    <a href="../login">Đăng Nhập</a>
+                                </li>
+                             </c:if>
 
-    <div class="col-12 mobile__header">
-        <ul class="header__mobile--nav">
-            <li class="header__logo">
-                <img src="../Homepage/assets/img/pngtree-human-feet-icon-flat-style-png-image_1809427.jpg" alt="">
-                <a href="">Shop giày dép</a>
-            </li> 
+                             <c:if test="${sessionScope.account!=null}">
+                                <li class="cart">                        
+                                    <a href="#" class="user">
+                                        <i class="fa-solid fa-user"></i>
+                                    </a>
+                                    <div class="expand-infor">
+                                        <a href=""><i class="fa-solid fa-user-large"></i>${sessionScope.account.displayName}</a> 
+                                        <a href="">Đơn hàng đã mua</a>
+                                        <a href="">Đặt trước</a>
+                                        <a href="../logout">Đăng xuất</a>
+                                    </div>
+                                </li>
+                             </c:if>
+                         </ul>
+                     </div>
+                 </div>
+            </div>
 
-            <li class="cart">
-                <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
-            </li>
+            <div class="col-12 mobile__header">
+                <ul class="header__mobile--nav">
+                    <li class="header__logo">
+                        <img src="assets/img/pngtree-human-feet-icon-flat-style-png-image_1809427.jpg" alt="">
+                        <a href="">Shop giày dép</a>
+                    </li> 
+    
+                    <li class="cart">
+                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
 
-            <li class="header__bar">
-                <i class="fa-solid fa-bars"></i>
-            </li>
-        </ul>
-
-        <ul class="mobile__nav">
-            <li>
-                <div class="mobile__search">
-                    <input type="text" placeholder="Tìm kiếm...">
-                    <i class="fa-solid fa-magnifying-glass"></i> 
-                </div>
-            </li>
-            <li>
-                <a href="">Trang chủ</a>
-            </li>
-            <li>
-                <a href="">Giày</a>
-            </li>
-            <li>
-                <a href="">Dép</a>
-                <!-- <ul class="child">
-                    <li>
-                        <a href="">Dép tổ ong</a>
-                    </li>
-                    <li>
-                        <a href="">Dép tổ ong</a>
-                    </li>
-                    <li>
-                        <a href="">Dép tổ ong</a>      
-                    </li>
-                </ul> -->
-            </li>
-            <li class="parent">
-                <a href="#">Phụ kiện</a>
-                <ul class="child">
-                    <li>
-                        <a href="#">Áo mưa</a>
-                    </li>
-                    <li>
-                        <a href="#">Gang tay</a>
-                    </li>
-                    <li>
-                        <a href="#">Quần ủng</a>
-                    </li>
-                    <li>
-                        <a href="#">Khác</a>
-                    </li>
-                    <li>
-                        <a href="">Khác nữa</a>
+                    <li class="header__bar">
+                        <i class="fa-solid fa-bars"></i>
                     </li>
                 </ul>
-            </li>
-            <li>
-                <a href="">Liên hệ</a>
-            </li>
-            <li><a href="">Đăng Nhập</a></li>
-        </ul>
 
-    </div>
-</header>
+                <ul class="mobile__nav">
+                    <li>
+                        <div class="mobile__search">
+                            <input type="text" placeholder="Tìm kiếm...">
+                            <i class="fa-solid fa-magnifying-glass"></i> 
+                        </div>
+                    </li>
+                    <li>
+                        <a href="">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="">Giày</a>
+                    </li>
+                    <li>
+                        <a href="">Dép</a>
+                        <!-- <ul class="child">
+                            <li>
+                                <a href="">Dép tổ ong</a>
+                            </li>
+                            <li>
+                                <a href="">Dép tổ ong</a>
+                            </li>
+                            <li>
+                                <a href="">Dép tổ ong</a>      
+                            </li>
+                        </ul> -->
+                    </li>
+                    <li class="parent">
+                        <a href="#">Phụ kiện</a>
+                        <ul class="child">
+                            <li>
+                                <a href="#">Áo mưa</a>
+                            </li>
+                            <li>
+                                <a href="#">Gang tay</a>
+                            </li>
+                            <li>
+                                <a href="#">Quần ủng</a>
+                            </li>
+                            <li>
+                                <a href="#">Khác</a>
+                            </li>
+                            <li>
+                                <a href="">Khác nữa</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="">Liên hệ</a>
+                    </li>
+                    <li>
+                        Xin chào Vinhdeptrai
+                        <!--<a href="../login">Đăng Nhập-->
+                    </a></li>
+                </ul>
+
+            </div>
+        </header>
 
 
 
@@ -217,56 +246,41 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div class="media">
-                    <div class="d-flex">
-                      <img src="assets/img/arrivel/arrivel_1.png" alt="" />
+            <%
+                int count=0; 
+                ArrayList<String> listPrices = (ArrayList<String>) request.getAttribute("listPrices");
+            %>
+            <c:if test="${requestScope.cart!=null}">
+             <c:forEach items="${requestScope.cart.listProducts}" var="p">
+                <tr>                
+                  <td>
+                    <div class="media">
+                      <div class="d-flex">
+                        <img src="../${p.image}" alt="" />
+                      </div>
+                      <div class="media-body">
+                        <p>${p.productName}</p>
+                        <p>Màu sắc: ${p.color}</p>
+                        <p>Kích thước: ${p.size}</p>
+                      </div>
                     </div>
-                    <div class="media-body">
-                      <p>Minimalistic shop for multipurpose use</p>
+                  </td>
+                  <td>
+                    <h5 class="price">${p.price}₫</h5>
+                  </td>                  
+                  <td>
+                    <div class="product_count">
+                      <h5>${p.quantity}</h5>
                     </div>
-                  </div>
-                </td>
-                <td>
-                  <h5>$360.00</h5>
-                </td>
-                <td>
-                  <div class="product_count">
-                    <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                    <input class="input-number" type="text" value="1" min="0" max="10">
-                    <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                  </div>
-                </td>
-                <td>
-                  <h5>$720.00</h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="media">
-                    <div class="d-flex">
-                      <img src="assets/img/arrivel/arrivel_2.png" alt="" />
-                    </div>
-                    <div class="media-body">
-                      <p>Minimalistic shop for multipurpose use</p>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <h5>$360.00</h5>
-                </td>
-                <td>
-                  <div class="product_count">
-                      <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                      <input class="input-number" type="text" value="1" min="0" max="10">
-                      <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                  </div>
-                </td>
-                <td>
-                  <h5>$720.00</h5>
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                      <h5 class="totalmoney"><%=listPrices.get(count)%>₫</h5>
+                      <% count+=1; %>
+                  </td>
+                </tr>
+              </c:forEach>               
+            </c:if>
+                
               <tr class="bottom_button">
                 <td>
                   <a class="btn_1" href="#">Mua thêm</a>
@@ -279,6 +293,7 @@
                   </div> -->
                 </td>
               </tr>
+              
               <tr>
                 <td></td>
                 <td></td>
@@ -286,7 +301,7 @@
                   <h5>Tổng số tiền</h5>
                 </td>
                 <td>
-                  <h5>$2160.00</h5>
+                    <h5>${requestScope.totalMoney}</h5>
                 </td>
               </tr>
               <tr class="shipping_area">
@@ -470,5 +485,13 @@
     <script src="./assets/js/main.js"></script>
     <script src="../Homepage/home.js"></script>
 </body>
-
+<script>
+    var price = document.querySelectorAll(".price");
+    var totalmoney = document.querySelectorAll(".totalmoney");
+    var quantity = document.querySelectorAll(".input-number");
+    price.forEach((element,index) => {
+        totalmoney[index].innerHTML=parseFloat(element.innerHTML)*quantity[index].value;
+    });
+    console.log(price)
+</script>
 </html>

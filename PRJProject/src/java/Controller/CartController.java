@@ -38,11 +38,23 @@ public class CartController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        Cart cart = (Cart) request.getSession().getAttribute("cart");
-        if(cart==null){
-            cart = new Cart();
-        }else{
+        Account account = (Account) request.getSession().getAttribute("account");      
+        if(request.getSession().getAttribute("cart")==null){
+            Cart cart = new Cart();
+            String pid = request.getParameter("pid");
+            String cid = request.getParameter("cid");
+            String sid = request.getParameter("sid");
+            String quantity = request.getParameter("quantity");
+            ProductCart pc = new ProductCart();
+            pc.setQuantity(Integer.parseInt(quantity));
+            pc.setProductID(Integer.parseInt(pid));
+            pc.setColorID(Integer.parseInt(cid));
+            pc.setSizeID(Integer.parseInt(sid));
+            cart.getListProducts().add(pc);
+            request.getSession().setAttribute("cart", cart);
+        }
+        else{
+            Cart cart = (Cart) request.getSession().getAttribute("cart");
             String pid = request.getParameter("pid");
             String cid = request.getParameter("cid");
             String sid = request.getParameter("sid");
@@ -55,6 +67,7 @@ public class CartController extends HttpServlet {
             if(!checkIsProductExist(cart, pc)){
                 cart.getListProducts().add(pc);
             }
+            request.getSession().setAttribute("cart", cart);
         }
     }
 

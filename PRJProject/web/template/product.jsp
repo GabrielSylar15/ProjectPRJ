@@ -59,7 +59,7 @@
                  <div class="header__navigation lg-6 md-6">
                      <ul>
                          <li>
-                             <a href="">Trang chủ</a>
+                             <a href="../Homepage/Home.jsp">Trang chủ</a>
                          </li>
                          <li>
                              <a href="..template/listproduct.jsp">Giày</a>
@@ -105,7 +105,7 @@
                          </li>
                          <!-- <li class="login"><a href="../">Đăng Nhập</a></li> -->
                          <li class="cart">                        
-                            <a href="#" class="user">
+                            <a href="" class="user">
                                 <i class="fa-solid fa-user"></i>
                             </a>
                             <div class="expand-infor">
@@ -256,52 +256,6 @@
                                     </div>
                                 </div>                            
                            <%}%>
-                         
-  
-                            
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product2.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Geometric striped flower home classy decor</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product5.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product6.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product1.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product4.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Sleeping orthopedic sciatica Back Hip Joint Pain relief</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-6">
-                                <div class="single_product_item">
-                                    <img src="assets/img/categori/product5.png" alt="" class="img-fluid">
-                                    <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                                    <p>From $5</p>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="load_more_btn text-center">
                             <a href="#" class="btn_3">Load More</a>

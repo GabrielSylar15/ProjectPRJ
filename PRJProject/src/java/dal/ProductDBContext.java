@@ -27,7 +27,7 @@ public class ProductDBContext extends DBContext{
     public ArrayList<Product> getListProducts(int page_index, int page_size){
         try {
             ArrayList<Product> listProducts = new ArrayList();
-            String sql="select *from (select *, ROW_NUMBER() OVER(order by ProductId asc) as row_index from Product) as tbl "
+            String sql="select *from (select *, ROW_NUMBER() OVER(order by ProductId desc) as row_index from Product) as tbl "
                     + "where row_index>=?*(?-1)+1 and row_index<=?*?";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, page_size);
@@ -165,8 +165,8 @@ public class ProductDBContext extends DBContext{
                                     "           ,?)";
             
             int count=0;
-            for (Size s: p.getListSizes()) {
-                for (Color c: p.getListColors()) {
+            for (Color c: p.getListColors()) {
+                for (Size s: p.getListSizes()) {
                     PreparedStatement stm_color_size = connection.prepareStatement(sql_color_size);
                     stm_color_size.setInt(1, p.getProductID());
                     stm_color_size.setInt(2, c.getColorID());
@@ -393,8 +393,12 @@ public class ProductDBContext extends DBContext{
         }
    }
    
+//   Delete
    public void deleteProduct(Product p){
        
    }
     
+//    public ArrayList<Product> getListProductsWithCondition(){
+//        
+//    }
 }

@@ -39,21 +39,23 @@
                      <div class="header__navigation lg-6 md-6">
                          <ul>
                              <li>
-                                 <a href="">Trang chủ</a>
+                                 <a href="#">Trang chủ</a>
                              </li>
-                             <li class="parent">
-                                 <a href="">Quản lý</a>
-                                 <ul class="child">
-                                     <li>
-                                         <a href="">Đơn hàng</a>
-                                     </li>
-                                     <li>
-                                         <a href="">Sản phẩm</a>
-                                     </li>                                     
-                                 </ul>
-                             </li>
+                             <c:if test="${sessionScope.account.isAdmin}">
+                                <li class="parent">
+                                    <a href="">Quản lý</a>
+                                    <ul class="child">
+                                        <li>
+                                            <a href="">Đơn hàng</a>
+                                        </li>
+                                        <li>
+                                            <a href="">Sản phẩm</a>
+                                        </li>                                     
+                                    </ul>
+                                </li>
+                             </c:if>
                              <li>
-                                 <a href="../template/listproduct.jsp">Giày</a>
+                                 <a href="../template/displayproducts">Giày</a>
                              </li>
                              <li>
                                  <a href="">Dép</a>
@@ -92,7 +94,7 @@
                                  </div>
                              </li>
                              <li class="cart">
-                                 <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                                 <a href="../template/order"><i class="fa-solid fa-cart-shopping"></i></a>
                              </li>
                              <c:if test="${sessionScope.account==null}">
                                 <li class="login">
@@ -109,6 +111,7 @@
                                         <a href=""><i class="fa-solid fa-user-large"></i>${sessionScope.account.displayName}</a> 
                                         <a href="">Đơn hàng đã mua</a>
                                         <a href="">Đặt trước</a>
+                                        <a href="../logout">Đăng xuất</a>
                                     </div>
                                 </li>
                              </c:if>

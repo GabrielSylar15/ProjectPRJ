@@ -6,6 +6,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,18 +15,44 @@ import java.math.BigDecimal;
 public class ProductCart {
     private int productID, colorID, sizeID, quantity;
     private String productName;
-    private BigDecimal price;
+    private String price;
+    private String image;
+    private String color,size;
+    
+    public String getColor() {
+        return color;
+    }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+    
     public ProductCart() {
     }
 
-    public ProductCart(int productID, int colorID, int sizeID, int quantity, String productName, BigDecimal price) {
+    public ProductCart(int productID, int colorID, int sizeID, int quantity, String productName) {
         this.productID = productID;
         this.colorID = colorID;
         this.sizeID = sizeID;
         this.quantity = quantity;
         this.productName = productName;
-        this.price = price;
+
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getProductID() {
@@ -68,12 +95,14 @@ public class ProductCart {
         this.productName = productName;
     }
 
-    public BigDecimal getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
         this.price = price;
     }
+
+
     
 }

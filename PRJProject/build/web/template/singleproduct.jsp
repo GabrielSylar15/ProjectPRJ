@@ -36,6 +36,7 @@
         <link rel="stylesheet" href="../Homepage/base.css">
         <link rel="stylesheet" href="../Homepage/grid.css">
         <link rel="stylesheet" href="../Homepage/home.css">
+        <link rel="stylesheet" href="../Homepage/toast.css">
 </head>
     
 
@@ -54,10 +55,10 @@
                  <div class="header__navigation lg-6 md-6">
                      <ul>
                          <li>
-                             <a href="">Trang chủ</a>
+                             <a href="../Homepage/Home.jsp">Trang chủ</a>
                          </li>
                          <li>
-                             <a href="..template/listproduct.jsp">Giày</a>
+                             <a href="listproduct.jsp">Giày</a>
                          </li>
                          <li>
                              <a href="">Dép</a>
@@ -96,11 +97,11 @@
                              </div>
                          </li>
                          <li class="cart">
-                             <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                             <a href="order"><i class="fa-solid fa-cart-shopping"></i></a>
                          </li>
                          <!-- <li class="login"><a href="../">Đăng Nhập</a></li> -->
                          <li class="cart">                        
-                            <a href="#" class="user">
+                            <a href="" class="user">
                                 <i class="fa-solid fa-user"></i>
                             </a>
                             <div class="expand-infor">
@@ -123,7 +124,7 @@
                 </li> 
 
                 <li class="cart">
-                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="order"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
 
                 <li class="header__bar">
@@ -251,14 +252,21 @@
             </div>
             <p style="text-align:left">Giá:${  requestScope.product.price}</p>  
             <p style="text-align:left" id="instock"></p>
-            <div class="add_to_cart">
-              <a href="#" class="btn_3">Thêm vào giỏ hàng</a>
-            </div>        
+            <div class="button-add-to-cart">
+                <div class="add_to_cart">
+                  <a href="#" class="btn_3">Thêm vào giỏ hàng</a>
+                </div>  
+                <div class="add_to_cart">
+                  <a href="#" class="btn_1">Mua ngay</a>
+                </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+    <div class="toast">
+    </div>
   <!--================End Single Product Area =================-->
    <!-- subscribe part here -->
    <section class="subscribe_part section_padding">
@@ -410,6 +418,7 @@
         <script src="./assets/js/waypoints.min.js"></script>
 
         <script src="../Homepage/home.js"></script>
+        <script src="../Homepage/toast.js"></script>
 
        <!--<script src="BuyProduct.js"></script>-->
 </body>
@@ -469,13 +478,35 @@
     ClickButton(); 
     document.querySelector(".btn_3").onclick = function(){
         if(sizeindex==null||colorindex==null){
-            alert("Bạn cần chọn sản phẩm cần mua");
+            Alert({
+                type: "error",
+                content: "Bạn cần chọn sản phẩm cần mua"
+            })
         }
         else{
-            var xttp = new XMLHttpRequest();
-            console.log(colorindex, sizeindex)
-        }
-        
+            if(parseInt(document.querySelector(".input-number").value)>parseInt(document.querySelector("#instock").innerHTML.split(" ")[0])){
+                Alert({
+                    type: "error",
+                    content: "Bạn đã thêm vượt số lượng tối đa trong kho"
+                })
+            } 
+            else if((parseInt(document.querySelector(".input-number").value)==0)){
+                Alert({
+                    type: "error",
+                    content: "Nhập số lượng cần mua"
+                })
+            }
+            else{
+                Alert({
+                    type: "success",
+                    content: "Sản phẩm đã được thêm vào giỏ hàng của bạn"
+                })
+                var xttp = new XMLHttpRequest();
+                var quantity = parseInt(document.querySelector(".input-number").value);
+                xttp.open("GET","cart?cid="+colorindex+"&sid="+sizeindex+"&quantity="+quantity+"&pid="+${requestScope.product.productID});
+                xttp.send();
+            }
+        }     
     }
 
 </script>

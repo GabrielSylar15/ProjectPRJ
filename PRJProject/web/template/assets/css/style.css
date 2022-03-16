@@ -13048,3 +13048,8 @@ input:focus {
 .table th:last-child{
   width: 150px;
 }
+
+.button-add-to-cart{
+    display: flex;
+    justify-content: flex-start;
+}
