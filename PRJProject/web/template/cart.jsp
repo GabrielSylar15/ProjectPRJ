@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="model.Cart"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -243,43 +244,64 @@
                 <th scope="col">Giá</th>
                 <th scope="col">Số lượng</th>
                 <th scope="col">Thành tiền</th>
+                <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
             <%
                 int count=0; 
-                ArrayList<String> listPrices = (ArrayList<String>) request.getAttribute("listPrices");
+                Cart c = (Cart) request.getAttribute("cart");
+                ArrayList<String> listPrices =c.getListPrices();
             %>
-            <c:if test="${requestScope.cart!=null}">
-             <c:forEach items="${requestScope.cart.listProducts}" var="p">
-                <tr>                
-                  <td>
-                    <div class="media">
-                      <div class="d-flex">
-                        <img src="../${p.image}" alt="" />
-                      </div>
-                      <div class="media-body">
-                        <p>${p.productName}</p>
-                        <p>Màu sắc: ${p.color}</p>
-                        <p>Kích thước: ${p.size}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <h5 class="price">${p.price}₫</h5>
-                  </td>                  
-                  <td>
-                    <div class="product_count">
-                      <h5>${p.quantity}</h5>
-                    </div>
-                  </td>
-                  <td>
-                      <h5 class="totalmoney"><%=listPrices.get(count)%>₫</h5>
-                      <% count+=1; %>
-                  </td>
-                </tr>
-              </c:forEach>               
-            </c:if>
+            <div id="abcde">
+                <c:if test="${requestScope.cart!=null}">
+                 <c:forEach items="${requestScope.cart.listProducts}" var="p">
+                    <tr>                
+                      <td>
+                        <div class="media">
+                          <div class="d-flex">
+                            <img src="../${p.image}" alt="" />
+                          </div>
+                          <div class="media-body">
+                            <p>${p.productName}</p>
+                            <p>
+                                <c:if test="${p.color!='None'}">
+                                    Màu sắc: ${p.color}
+                                </c:if>
+                            </p>
+                            <p>
+                                <c:if test="${p.size!='None'}">
+                                    Kích thước: ${p.size}
+                                </c:if>
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <h5 class="price">${p.price}₫</h5>
+                      </td>                  
+                      <td>
+                        <div class="product_count">
+                          <h5>
+                              <button class="add">+</button>
+                              ${p.quantity}
+                              <input type="hidden" class="infor" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}">
+                              <button class="minus">-</button></h5>
+                        </div>
+                      </td>
+                      <td>
+                          <h5 class="totalmoney"><%=listPrices.get(count)%>₫</h5>
+                          <% count+=1; %>
+                      </td>
+                      <td>
+                        <h5>Xóa<i class="fa-solid fa-circle-trash"></i></h5>
+                      </td>
+                    </tr>                 
+                 </div>
+                  </c:forEach>               
+                </c:if>
+            </div>
+
                 
               <tr class="bottom_button">
                 <td>
@@ -301,7 +323,7 @@
                   <h5>Tổng số tiền</h5>
                 </td>
                 <td>
-                    <h5>${requestScope.totalMoney}</h5>
+                    <h5>${requestScope.cart.totalMoney}</h5>
                 </td>
               </tr>
               <tr class="shipping_area">
@@ -350,13 +372,13 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table>    
           <div class="checkout_btn_inner float-right">
             <a class="btn_1" href="#">Continue Shopping</a>
             <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
           </div>
         </div>
-      </div>
+      </div>   
   </section>
   <!--================End Cart Area =================-->
 
@@ -486,12 +508,24 @@
     <script src="../Homepage/home.js"></script>
 </body>
 <script>
-    var price = document.querySelectorAll(".price");
-    var totalmoney = document.querySelectorAll(".totalmoney");
-    var quantity = document.querySelectorAll(".input-number");
-    price.forEach((element,index) => {
-        totalmoney[index].innerHTML=parseFloat(element.innerHTML)*quantity[index].value;
-    });
-    console.log(price)
+    function loadData(){
+        var infor = document.querySelectorAll(".infor");
+        var xttp = new XMLHttpRequest();
+        document.querySelectorAll(".add").forEach((element, index) => {
+            element.onclick = function(){
+               xttp.open("POST", "order", true);
+               xttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               xttp.send(infor[index].value+"&num=1");
+            }                   
+        });
+        xttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("abcde").innerHTML = this.responseText;
+          }
+        };        
+
+    }
+    loadData();
 </script>
 </html>
+

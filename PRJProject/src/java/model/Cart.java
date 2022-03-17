@@ -14,6 +14,24 @@ import java.util.ArrayList;
 public class Cart {
     private ArrayList<ProductCart> listProducts = new ArrayList<>();
     private Account account;
+    private ArrayList<String> listPrices;
+    private String totalMoney;
+
+    public ArrayList<String> getListPrices() {
+        return listPrices;
+    }
+
+    public void setListPrices(ArrayList<String> listPrices) {
+        this.listPrices = listPrices;
+    }
+
+    public String getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(String totalMoney) {
+        this.totalMoney = totalMoney;
+    }
     
     public Cart() {
     }

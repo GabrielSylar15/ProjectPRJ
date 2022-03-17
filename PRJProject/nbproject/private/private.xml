@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/src/java/Controller/CartController.java</file>
             <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/src/java/Controller/ProductInsert.java</file>
-            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/src/java/dal/ProductDBContext.java</file>
+            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/web/template/singleproduct.jsp</file>
+            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/src/java/Controller/AccountController.java</file>
+            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/src/java/Controller/OrderController.java</file>
+            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/web/template/cart.jsp</file>
+            <file>file:/D:/WED201c/HtmlPRJ/ProjectPRJ/PRJProject/src/java/Controller/ProductController.java</file>
         </group>
     </open-files>
 </project-private>

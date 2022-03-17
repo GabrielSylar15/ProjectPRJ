@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,21 +26,55 @@ import model.Size;
  *
  * @author ADMIN
  */
-public class OrderController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
+public class OrderController extends HttpServlet {
+    
+    protected boolean checkIsProductExist( ArrayList<ProductCart> listProductCarts, ProductCart c){
+        for (ProductCart lc : listProductCarts) {
+            if(lc.getColorID()==c.getColorID()
+                    &&lc.getSizeID()==c.getSizeID()
+                    &&lc.getProductID()==c.getProductID()){
+                lc.setQuantity(c.getQuantity()+lc.getQuantity());
+                return true;
+            }
+        }
+        return false;   
+    }
+    
+    protected ArrayList<ProductCart> getListProductsFromCooky(String txt){
+//s        pid:1,sid:1,cid:1,quantity:1;
+//temp:   pid:1
+        ArrayList<ProductCart> listProducts= new ArrayList<>();
+        String[] product = txt.split("/");
+        for (String s : product) {
+            String temp[]=s.split(",");
+            try {
+                int pid = Integer.parseInt(temp[0].split((":"))[1]);
+                int sid = Integer.parseInt(temp[1].split((":"))[1]);         
+                int cid = Integer.parseInt(temp[2].split((":"))[1]);
+                int quantity = Integer.parseInt(temp[3].split((":"))[1]);
+                ProductCart pc = new ProductCart();
+                pc.setColorID(cid);
+                pc.setQuantity(quantity);
+                pc.setSizeID(sid);
+                pc.setProductID(pid);
+                if(listProducts.isEmpty()||!checkIsProductExist(listProducts, pc)){
+                    listProducts.add(pc);      
+                } 
+           } 
+            catch (Exception e) {       
+           }                      
+        }
+        return listProducts;
+    }
+    
+    public Cart getCart(ArrayList<ProductCart> listProducts){
         ProductDBContext pdbc = new ProductDBContext();
         ArrayList<String> listPrices = new ArrayList<>();
         BigDecimal totalMoney=new BigDecimal("0");
         DecimalFormat df = new DecimalFormat("#,###");
-        if(request.getSession().getAttribute("cart")!=null){
-            Cart cart = (Cart) request.getSession().getAttribute("cart");
-            for (ProductCart pc : cart.getListProducts()) {
+        if(!listProducts.isEmpty()){    
+            for (ProductCart pc : listProducts) {
                 Product p = pdbc.getOneProduct(pc.getProductID());
                 pc.setImage(p.getListImages().get(0).getImage());
                 listPrices.add(df.format(p.getPrice().multiply(new BigDecimal(pc.getQuantity()))));
@@ -57,28 +92,69 @@ public class OrderController extends HttpServlet {
                     }
                 }
             }
-            request.setAttribute("totalMoney", df.format(totalMoney));
-            request.setAttribute("cart", cart);
-            request.setAttribute("listPrices",listPrices);
+            Cart c = new Cart();
+            c.setListProducts(listProducts);
+            c.setListPrices(listPrices);
+            c.setTotalMoney(totalMoney.toString());
+            return c;
+        }   
+        return null;
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        Cookie cookies[] = request.getCookies();
+        ArrayList<ProductCart> listProducts = new ArrayList<>();
+        if(cookies!=null){
+            for (Cookie cooky : cookies) {
+                if(cooky.getName().equals("cart")){
+                    listProducts = getListProductsFromCooky(cooky.getValue());
+                }
+            }
+        }    
+        if(getCart(listProducts)!=null){
+            request.setAttribute("cart", getCart(listProducts));
         }
         request.getRequestDispatcher("cart.jsp").forward(request, response);  
-
-
-
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-  
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        int sid = Integer.parseInt(request.getParameter("sid"));
+        int quantity = Integer.parseInt(request.getParameter("num"));
+        int num = Integer.parseInt(request.getParameter("num"));
+        Cookie cookies[] = request.getCookies();
+        ArrayList<ProductCart> listProducts = new ArrayList<>();
+        if(cookies!=null){
+            for (Cookie cooky : cookies) {
+                if(cooky.getName().equals("cart")){
+                    listProducts = getListProductsFromCooky(cooky.getValue());
+                }
+            }
+        }    
+        for (ProductCart pc : listProducts) {
+            if(pc.getColorID()==cid
+                    &&pc.getProductID()==pid
+                    &&pc.getSizeID()==sid){
+                if(pc.getQuantity()+num<=0){
+                    listProducts.remove(pc);
+                }else{
+                    pc.setQuantity(pc.getQuantity()+num);
+                }
+            }
+        }
+        if(getCart(listProducts)!=null){
+            request.setAttribute("cart", getCart(listProducts));
+        }     
+        request.getRequestDispatcher("../view/data.jsp").forward(request, response); 
     }
 
     /**
