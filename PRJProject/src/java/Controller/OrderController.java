@@ -95,7 +95,7 @@ public class OrderController extends HttpServlet {
             Cart c = new Cart();
             c.setListProducts(listProducts);
             c.setListPrices(listPrices);
-            c.setTotalMoney(totalMoney.toString());
+            c.setTotalMoney(df.format(totalMoney));
             return c;
         }   
         return null;
@@ -104,9 +104,6 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
         Cookie cookies[] = request.getCookies();
         ArrayList<ProductCart> listProducts = new ArrayList<>();
         if(cookies!=null){
@@ -126,10 +123,12 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");        
         int pid = Integer.parseInt(request.getParameter("pid"));
         int cid = Integer.parseInt(request.getParameter("cid"));
         int sid = Integer.parseInt(request.getParameter("sid"));
-        int quantity = Integer.parseInt(request.getParameter("num"));
         int num = Integer.parseInt(request.getParameter("num"));
         Cookie cookies[] = request.getCookies();
         ArrayList<ProductCart> listProducts = new ArrayList<>();
@@ -140,17 +139,32 @@ public class OrderController extends HttpServlet {
                 }
             }
         }    
-        for (ProductCart pc : listProducts) {
-            if(pc.getColorID()==cid
-                    &&pc.getProductID()==pid
-                    &&pc.getSizeID()==sid){
-                if(pc.getQuantity()+num<=0){
-                    listProducts.remove(pc);
+        String txt="";
+        for (int i=0; i<listProducts.size();i++) {
+            if(listProducts.get(i).getColorID()==cid
+                    &&listProducts.get(i).getProductID()==pid
+                    &&listProducts.get(i).getSizeID()==sid){
+                if(listProducts.get(i).getQuantity()+num<=0){
+                    listProducts.remove(listProducts.get(i));
                 }else{
-                    pc.setQuantity(pc.getQuantity()+num);
+                    listProducts.get(i).setQuantity(listProducts.get(i).getQuantity()+num);
                 }
             }
         }
+        
+        for(int i=0;i<listProducts.size();i++){
+            if(i==0){
+                txt="pid:"+listProducts.get(i).getProductID()+",sid:"+listProducts.get(i).getSizeID()+",cid:"+
+                        listProducts.get(i).getColorID()+",quantity:"+listProducts.get(i).getQuantity();           
+            }else{
+                txt+="/"+"pid:"+listProducts.get(i).getProductID()+",sid:"+listProducts.get(i).getSizeID()+",cid:"+
+                        listProducts.get(i).getColorID()+",quantity:"+listProducts.get(i).getQuantity();
+            }
+        }
+        Cookie c = new Cookie("cart", txt);
+        c.setMaxAge(60*60);
+        response.addCookie(c);
+        response.getWriter().print(txt);        
         if(getCart(listProducts)!=null){
             request.setAttribute("cart", getCart(listProducts));
         }     

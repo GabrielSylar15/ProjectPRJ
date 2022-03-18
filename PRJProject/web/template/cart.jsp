@@ -43,7 +43,7 @@
 </head>
 
 <body>
-
+<% int count=0; %>   
         <header>
             <div class="header__largescreen">
                 <div class="header__ann">
@@ -248,60 +248,54 @@
               </tr>
             </thead>
             <tbody>
+            <c:if test="${requestScope.cart!=null}">
+             <c:forEach items="${requestScope.cart.listProducts}" var="p">
             <%
-                int count=0; 
                 Cart c = (Cart) request.getAttribute("cart");
                 ArrayList<String> listPrices =c.getListPrices();
             %>
-            <div id="abcde">
-                <c:if test="${requestScope.cart!=null}">
-                 <c:forEach items="${requestScope.cart.listProducts}" var="p">
-                    <tr>                
-                      <td>
-                        <div class="media">
-                          <div class="d-flex">
-                            <img src="../${p.image}" alt="" />
-                          </div>
-                          <div class="media-body">
-                            <p>${p.productName}</p>
-                            <p>
-                                <c:if test="${p.color!='None'}">
-                                    Màu sắc: ${p.color}
-                                </c:if>
-                            </p>
-                            <p>
-                                <c:if test="${p.size!='None'}">
-                                    Kích thước: ${p.size}
-                                </c:if>
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <h5 class="price">${p.price}₫</h5>
-                      </td>                  
-                      <td>
-                        <div class="product_count">
-                          <h5>
-                              <button class="add">+</button>
-                              ${p.quantity}
-                              <input type="hidden" class="infor" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}">
-                              <button class="minus">-</button></h5>
-                        </div>
-                      </td>
-                      <td>
-                          <h5 class="totalmoney"><%=listPrices.get(count)%>₫</h5>
-                          <% count+=1; %>
-                      </td>
-                      <td>
-                        <h5>Xóa<i class="fa-solid fa-circle-trash"></i></h5>
-                      </td>
-                    </tr>                 
-                 </div>
-                  </c:forEach>               
-                </c:if>
-            </div>
-
+                <tr>                
+                  <td>
+                    <div class="media">
+                      <div class="d-flex">
+                        <img src="../${p.image}" alt="" />
+                      </div>
+                      <div class="media-body">
+                        <p>${p.productName}</p>
+                        <p>
+                            <c:if test="${p.color!='None'}">
+                                Màu sắc: ${p.color}
+                            </c:if>
+                        </p>
+                        <p>
+                            <c:if test="${p.size!='None'}">
+                                Kích thước: ${p.size}
+                            </c:if>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h5 class="price">${p.price}₫</h5>
+                  </td>                  
+                  <td>
+                    <div class="product_count">
+                      <h5>
+                          <button class="add" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}&num=1">+</button>
+                          ${p.quantity}
+                          <button class="minus" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}&num=-1">-</button></h5>
+                    </div>
+                  </td>
+                  <td>
+                      <h5 class="totalmoney"><%=listPrices.get(count)%>₫</h5>
+                      <% count+=1; %>
+                  </td>
+                  <td>
+                    <h5>Xóa<i class="fa-solid fa-circle-trash"></i></h5>
+                  </td>
+                </tr>
+              </c:forEach>               
+            </c:if>
                 
               <tr class="bottom_button">
                 <td>
@@ -372,13 +366,13 @@
                 </td>
               </tr>
             </tbody>
-          </table>    
+          </table>
           <div class="checkout_btn_inner float-right">
             <a class="btn_1" href="#">Continue Shopping</a>
             <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
           </div>
         </div>
-      </div>   
+      </div>
   </section>
   <!--================End Cart Area =================-->
 
@@ -511,19 +505,18 @@
     function loadData(){
         var infor = document.querySelectorAll(".infor");
         var xttp = new XMLHttpRequest();
-        document.querySelectorAll(".add").forEach((element, index) => {
-            element.onclick = function(){
-               xttp.open("POST", "order", true);
-               xttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-               xttp.send(infor[index].value+"&num=1");
-            }                   
+        document.querySelector(".table").addEventListener("click",function(e){
+            if(e.target && e.target.nodeName == "BUTTON"){
+                xttp.open("POST", "order", true);
+                xttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xttp.send(e.target.value); 
+            }
         });
-        xttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("abcde").innerHTML = this.responseText;
-          }
-        };        
-
+            xttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.querySelector("table").innerHTML = this.responseText;
+                }
+            }
     }
     loadData();
 </script>
