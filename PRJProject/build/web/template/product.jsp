@@ -42,7 +42,10 @@
 </head>
     <%
         ArrayList<Product> listProducts = (ArrayList<Product>) request.getAttribute("listProducts");
+        int totalpage = (Integer)(request.getAttribute("totalpage"));
+        int pageindex = (Integer) request.getAttribute("pageindex");
     %>
+  
 <body>
 
     <header>
@@ -226,19 +229,47 @@
                                 <div class="select_option_list">Danh mục sản phẩm<i class="right fas fa-caret-down"></i> </div>
                                 <div class="select_option_dropdown">
                                     <c:forEach items="${requestScope.listCategories}" var="c">
-                                        <p><a href="#">${c.categoryName}</a></p>
+                                        <p><a href="displayproducts?categoryid=${c.categoryID}">${c.categoryName}</a></p>
                                     </c:forEach>
                                 </div>
                             </div>
                         </div>
                         <div class="single_sedebar">
                             <div class="select_option">
-                                <div class="select_option_list">Type <i class="right fas fa-caret-down"></i> </div>
+                                <div class="select_option_list">Sắp xếp theo<i class="right fas fa-caret-down"></i> </div>
                                 <div class="select_option_dropdown">
-                                    <p><a href="#">Type 1</a></p>
-                                    <p><a href="#">Type 2</a></p>
-                                    <p><a href="#">Type 3</a></p>
-                                    <p><a href="#">Type 4</a></p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="price-desc">
+                                        <a href="">Giám giảm dần</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="price-asc">
+                                        <a href="">Giá tăng dần</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="best-selling">
+                                        <a href="#">Sản phẩm bán chạy nhất</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="maxquantity">
+                                        <a href="#">Số lượng nhiều nhất</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="minquantity">
+                                        <a href="#">Số lượng ít nhất</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="newest">
+                                        <a href="#">Mới nhất</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="oldest">
+                                        <a href="#">Cũ nhất</a>
+                                    </p>
+                                    <p class="order">
+                                        <input class="ordervalue" type="hidden" value="benifit">
+                                        <a href="#">Lợi nhuận lớn nhất</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -257,8 +288,11 @@
                                 </div>                            
                            <%}%>
                         </div>
-                        <div class="load_more_btn text-center">
-                            <a href="#" class="btn_3">Load More</a>
+                        <div class="load_more_btn text-center" id="pagger">
+                            <!--<a href="#" class="btn_3">Load More</a>-->
+<!--                            <a>1</a>
+                            <a>2</a>
+                            <a>3</a>-->
                         </div>
                     </div>
                 </div>
@@ -313,6 +347,22 @@
         <script src="./assets/js/waypoints.min.js"></script>
         <!--  -->
         <script src="../Homepage/home.js"></script>
+        <script src="pagger.js"></script>
 </body>
-
+<script>
+     pagger('pagger',<%=pageindex%>, <%=totalpage%>,3);
+     var OrderValues = document.querySelectorAll(".ordervalue");
+     var Taga = document.querySelectorAll(".order a");
+     console.log(OrderValues[0].value)
+     document.querySelectorAll(".order").forEach((element,index) => {
+         element.onclick = function(){
+             if(window.location.search.includes("category")){
+                var categoryid =  parseInt(window.location.search.split("=")[1]);
+                Taga[index].href='displayproducts?categoryid='+categoryid+'&order='+OrderValues[index].value;
+             }else{
+                Taga[index].href='displayproducts?order='+OrderValues[index].value;
+             }
+         }
+     });
+</script>
 </html>

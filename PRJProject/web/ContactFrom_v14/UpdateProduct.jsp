@@ -63,7 +63,7 @@
                  <div class="header__navigation lg-6 md-6">
                      <ul>
                          <li>
-                             <a href="">Trang chủ</a>
+                             <a href="../Homepage/Home.jsp">Trang chủ</a>
                          </li>
                          <li>
                              <a href="..template/listproduct.jsp">Giày</a>

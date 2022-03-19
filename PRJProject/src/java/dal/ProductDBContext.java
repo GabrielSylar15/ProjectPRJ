@@ -397,8 +397,80 @@ public class ProductDBContext extends DBContext{
    public void deleteProduct(Product p){
        
    }
+   
+// Count the product for paging
+    public int count(String condition) throws SQLException{
+        String sql = "select count(*) as total from Product";
+        if(!condition.equals(""))   sql+=" "+condition;
+        PreparedStatement st = connection.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while(rs.next()){
+            int count = rs.getInt("total");
+            return count;
+        }
+        return -1;
+    } 
     
-//    public ArrayList<Product> getListProductsWithCondition(){
-//        
-//    }
+    public ArrayList<Product> getListProductsWithCondition(int page_index, int page_size, String condition, String order){
+         try {
+            String sql="";
+            ArrayList<Product> listProducts = new ArrayList();
+            if(order.equals(""))    order="ProductId desc";
+            if(condition.equals("")&&order.equals("")){
+                sql="select *from (select *, ROW_NUMBER() OVER(order by "+order+") as row_index from Product) as tbl "
+                        + "where row_index>=?*(?-1)+1 and row_index<=?*? ";
+            }
+            else if(order.equals("quantity desc")||order.equals("quantity asc")){
+                sql="select *from (select a.ProductID, ProductName, CategoryID, Price, QuantityPerUnit, Description, RetailPrice,\n" +
+                                "Quantity, ROW_NUMBER() OVER(order by "+order+") as row_index \n" +
+                                "from Product as a join (select productid, SUM(Quantity) as quantity from Quantity group by productid) as b\n" +
+                                "on a.ProductID=b.ProductID) as tbl \n" +
+                                "where row_index>=?*(?-1)+1 and row_index<=?*? ";
+            }
+            else{
+                sql="select *from (select *, ROW_NUMBER() OVER(order by "+order+" ) as row_index "
+                        + "from Product "+ condition+") as tbl "
+                    + "where row_index>=?*(?-1)+1 and row_index<=?*? ";
+            } 
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, page_size);
+            st.setInt(2, page_index);
+            st.setInt(3, page_size);
+            st.setInt(4, page_index);    
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Product p = new Product();
+                p.setProductID(rs.getInt("ProductID"));
+                p.setProductName(rs.getString("ProductName"));
+                p.setPrice(rs.getBigDecimal("Price"));
+                p.setQuantityPerUnit(rs.getInt("QuantityPerUnit"));
+                Category category = new Category();
+                category.setCategoryID(rs.getInt("CategoryID"));
+                p.setCategory(category);
+                p.setDescription(rs.getNString("Description"));
+                p.setRetailPrice(rs.getBigDecimal("RetailPrice"));
+                listProducts.add(p);
+            }
+            
+           String sql_listImages = "select Image, ImageID from ProductImage where ProductID = ?";
+            for (Product p : listProducts) {
+                PreparedStatement st_img = connection.prepareStatement(sql_listImages);
+                st_img.setInt(1, p.getProductID());
+                ArrayList<ProductImages> listImages = new ArrayList<>();
+                ResultSet rs_img = st_img.executeQuery();
+                while (rs_img.next()) {                    
+                    ProductImages img = new ProductImages();
+                    img.setImage(rs_img.getString("Image"));
+                    img.setImageID(rs_img.getInt("ImageID"));
+                    listImages.add(img);
+                }
+               p.setListImages(listImages);
+            }
+            
+            return listProducts;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;       
+    }
 }
