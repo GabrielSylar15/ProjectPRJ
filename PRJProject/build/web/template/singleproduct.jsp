@@ -58,10 +58,10 @@
                              <a href="../Homepage/Home.jsp">Trang chủ</a>
                          </li>
                          <li>
-                             <a href="listproduct.jsp">Giày</a>
+                             <a href="displayproducts?categoryid=1">Giày</a>
                          </li>
                          <li>
-                             <a href="">Dép</a>
+                             <a href="displayproducts?categoryid=2">Dép</a>
                          </li>
                          <li class="parent">
                              <a href="#">Phụ kiện</a>
@@ -105,7 +105,7 @@
                                 <i class="fa-solid fa-user"></i>
                             </a>
                             <div class="expand-infor">
-                                <a href=""><i class="fa-solid fa-user-large"></i> Nguyễn Thế Vinh</a> 
+                                <a href="#"><i class="fa-solid fa-user-large"></i> Nguyễn Thế Vinh</a> 
                                 <a href="">VinhNT</a>
                                 <a href="">Đơn hàng đã mua</a>
                                 <a href="">Đặt trước</a>
@@ -505,9 +505,13 @@
                 var quantity = parseInt(document.querySelector(".input-number").value);
                 xttp.open("GET","cart?cid="+colorindex+"&sid="+sizeindex+"&quantity="+quantity+"&pid="+${requestScope.product.productID});
                 xttp.send();
+                xttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                         document.getElementById("instock").innerHTML = this.responseText+" sản phẩm có sẵn";
+                    }
+                }                    
             }
         }     
     }
-
 </script>
 </html>

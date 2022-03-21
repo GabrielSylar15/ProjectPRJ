@@ -15,9 +15,29 @@ import java.util.ArrayList;
 public class ProductCart {
     private int productID, colorID, sizeID, quantity;
     private String productName;
-    private String price;
+    private String price, retailPrice;
     private String image;
     private String color,size;
+    private BigDecimal priceBigDecimal;
+    
+    
+    public BigDecimal getPriceBigDecimal() {
+        return priceBigDecimal;
+    }
+
+    public void setPriceBigDecimal(BigDecimal priceBigDecimal) {
+        this.priceBigDecimal = priceBigDecimal;
+    }
+    
+
+    public String getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(String retailPrice) {
+        this.retailPrice = retailPrice;
+    }
+    
     
     public String getColor() {
         return color;

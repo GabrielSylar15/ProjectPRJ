@@ -65,13 +65,13 @@
                              <a href="../Homepage/Home.jsp">Trang chủ</a>
                          </li>
                          <li>
-                             <a href="..template/listproduct.jsp">Giày</a>
+                             <a href="displayproducts?categoryid=1">Giày</a>
                          </li>
                          <li>
-                             <a href="">Dép</a>
+                             <a href="displayproducts?categoryid=2">Dép</a>
                          </li>
                          <li class="parent">
-                             <a href="#">Phụ kiện</a>
+                             <a href="displayproducts">Phụ kiện</a>
                              <ul class="child">
                                  <li>
                                      <a href="#">Áo mưa</a>
@@ -86,7 +86,7 @@
                                      <a href="#">Khác</a>
                                  </li>
                                  <li>
-                                     <a href="">Khác nữa</a>
+                                     <a href="displayproducts?categoryid=3">Khác nữa</a>
                                  </li>
                              </ul>
                          </li>

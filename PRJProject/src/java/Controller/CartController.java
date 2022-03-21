@@ -6,6 +6,7 @@
 package Controller;
 
 import com.oracle.jrockit.jfr.Producer;
+import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Cart;
+import model.Color_Size;
+import model.Product;
 import model.ProductCart;
 
 /**
@@ -80,8 +83,28 @@ public class CartController extends HttpServlet {
         }    
         Cookie c = new Cookie("cart", txt);
         c.setMaxAge(60*60);
+        
+        int maxquantity=0;
+        ProductDBContext productDContext = new ProductDBContext();
+        OrderController oc = new OrderController();        
+        Product p = productDContext.getOneProduct(Integer.parseInt(pid));
+        ArrayList<ProductCart> listProducts = oc.getListProductsFromCooky(txt);
+        for (Color_Size cs : p.getListColor_Sizes()) {
+            if(cs.getColorID()==Integer.parseInt(cid)&&
+                    cs.getSizeID()==Integer.parseInt(sid)){
+                maxquantity=cs.getQuantity();
+            }
+        }
+        
+        for (ProductCart pc : listProducts) {
+            if(pc.getColorID()==Integer.parseInt(cid)&&
+                    pc.getSizeID()==Integer.parseInt(sid)&&pc.getProductID()==p.getProductID()){
+                maxquantity-=pc.getQuantity();
+            }
+        } 
+        response.getWriter().print(maxquantity);
         response.addCookie(c);
-        response.getWriter().print(txt);
+   
     }
     
     @Override

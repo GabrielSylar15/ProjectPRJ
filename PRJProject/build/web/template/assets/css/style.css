@@ -10847,7 +10847,6 @@ input:focus {
 /* line 1100, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_product.scss */
 .cart_inner .table {
   margin-bottom: 30px;
-  border-bottom: 1px solid #dddddd;
 }
 
 /* line 1106, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_product.scss */
@@ -10866,6 +10865,7 @@ input:focus {
   padding-bottom: 30px;
   vertical-align: middle;
   align-self: center;
+  border-bottom: 1px solid #333;
 }
 
 /* line 1126, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_product.scss */
@@ -13052,4 +13052,18 @@ input:focus {
 .button-add-to-cart{
     display: flex;
     justify-content: flex-start;
+}
+
+.billing_details>div{
+    justify-content: center;
+}
+
+.billing_details{
+    padding-bottom: 100px;
+}
+
+button{
+    border: none;
+    cursor: pointer;
+    background-color: white;
 }

@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Cart;
 import model.Color;
+import model.Color_Size;
+import model.Order;
 import model.Product;
 import model.ProductCart;
 import model.Size;
@@ -80,7 +82,9 @@ public class OrderController extends HttpServlet {
                 listPrices.add(df.format(p.getPrice().multiply(new BigDecimal(pc.getQuantity()))));
                 totalMoney=totalMoney.add(p.getPrice().multiply(new BigDecimal(pc.getQuantity())));
                 pc.setPrice(df.format(p.getPrice()));
+                pc.setRetailPrice(df.format(p.getRetailPrice()));
                 pc.setProductName(p.getProductName());
+                pc.setPriceBigDecimal(p.getPrice());
                 for (Color c : p.getListColors()) {
                     if(c.getColorID()==pc.getColorID()){
                         pc.setColor(c.getColor());
@@ -131,6 +135,15 @@ public class OrderController extends HttpServlet {
         int sid = Integer.parseInt(request.getParameter("sid"));
         int num = Integer.parseInt(request.getParameter("num"));
         Cookie cookies[] = request.getCookies();
+        int maxquantity=0;
+        ProductDBContext productDBContext = new ProductDBContext();
+        Product p = productDBContext.getOneProduct(pid);
+        for (Color_Size cs : p.getListColor_Sizes()) {
+            if(cs.getColorID()==cid&&cs.getSizeID()==sid){
+                maxquantity=cs.getQuantity();
+            }
+        }
+        
         ArrayList<ProductCart> listProducts = new ArrayList<>();
         if(cookies!=null){
             for (Cookie cooky : cookies) {
@@ -144,9 +157,12 @@ public class OrderController extends HttpServlet {
             if(listProducts.get(i).getColorID()==cid
                     &&listProducts.get(i).getProductID()==pid
                     &&listProducts.get(i).getSizeID()==sid){
-                if(listProducts.get(i).getQuantity()+num<=0){
+                if(listProducts.get(i).getQuantity()+num<=0||num==0){
                     listProducts.remove(listProducts.get(i));
-                }else{
+                }else if(listProducts.get(i).getQuantity()+num>maxquantity){
+                    listProducts.get(i).setQuantity(maxquantity);
+                }
+                else{
                     listProducts.get(i).setQuantity(listProducts.get(i).getQuantity()+num);
                 }
             }

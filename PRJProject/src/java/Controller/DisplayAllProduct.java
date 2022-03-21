@@ -56,7 +56,7 @@ public class DisplayAllProduct extends HttpServlet {
                         order="quantity asc";
                         break;
                     case "newest":
-                        order="ProductID desc";
+                    order="ProductID desc";
                         break;
                     case "oldest":
                         order="ProductID asc";

@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="model.Order"%>
 <%@page import="model.Cart"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +13,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Giỏ hàng</title>
+  <title>Thanh toán</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="manifest" href="site.webmanifest">
@@ -43,7 +44,6 @@
 </head>
 
 <body>
-<% int count=0; %>   
         <header>
             <div class="header__largescreen">
                 <div class="header__ann">
@@ -223,7 +223,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="hero-cap text-center">
-                        <h2>Giỏ hàng</h2>
+                        <h2>Thanh toán</h2>
                     </div>
                 </div>
             </div>
@@ -233,7 +233,9 @@
   <!-- slider Area End-->
 
   <!--================Cart Area =================-->
-  <section class="cart_area section_padding">
+<c:forEach items="${requestScope.listOrders}" var="o">
+  <% int count=0,index=0; %>   
+   <section class="cart_area section_padding">
     <div class="container">
       <div class="cart_inner">
         <div class="table-responsive">
@@ -244,15 +246,15 @@
                 <th scope="col">Giá</th>
                 <th scope="col">Số lượng</th>
                 <th scope="col">Thành tiền</th>
-                <th scope="col">Thao tác</th>
+                <th scope="col">Giá bán ra</th>
               </tr>
             </thead>
             <tbody>
-            <c:if test="${requestScope.cart!=null}">
-             <c:forEach items="${requestScope.cart.listProducts}" var="p">
+             <c:forEach items="${o.cart.listProducts}" var="p">
             <%
-                Cart c = (Cart) request.getAttribute("cart");
-                ArrayList<String> listPrices =c.getListPrices();
+                ArrayList<Order> listOrders = (ArrayList<Order>) request.getAttribute("listOrders");
+                Cart c = listOrders.get(index).getCart();
+                ArrayList<String> listPrices = c.getListPrices();
             %>
                 <tr>                
                   <td>
@@ -261,7 +263,7 @@
                         <img src="../${p.image}" alt="" />
                       </div>
                       <div class="media-body">
-                        <p><a href="productdetail?pid=${p.productID}">${p.productName}</a></p>
+                        <p>${p.productName}</p>
                         <p>
                             <c:if test="${p.color!='None'}">
                                 Màu sắc: ${p.color}
@@ -281,37 +283,23 @@
                   <td>
                     <div class="product_count">
                       <h5>
-                          <button class="add" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}&num=1">+</button>
                           ${p.quantity}
-                          <button class="minus" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}&num=-1">-</button></h5>
                     </div>
                   </td>
                   <td>
                       <h5 class="totalmoney"><%=listPrices.get(count)%>₫</h5>
                       <% count+=1; %>
                   </td>
-                  <td>
-                    <h5 class="delete">
-                        <button class="add" value="pid=${p.productID}&sid=${p.sizeID}&cid=${p.colorID}&num=0">Xóa</button>
-                    </h5>
-                  </td>
+                   <td>
+                    <div class="product_count">
+                      <h5>
+                          ${p.retailPrice}
+                    </div>
+                  </td>                 
+                  
                 </tr>
-              </c:forEach>               
-            </c:if>
-                
-              <tr class="bottom_button">
-                <td>
-                  <a class="btn_1" href="#">Mua thêm</a>
-                </td>
-                <td></td>
-                <td></td>
-                <td>
-                  <!-- <div class="cupon_text float-right">
-                    <a class="btn_1" href="#">Close Coupon</a>
-                  </div> -->
-                </td>
-              </tr>
-              
+              </c:forEach>                           
+ 
               <tr>
                 <td></td>
                 <td></td>
@@ -319,18 +307,55 @@
                   <h5>Tổng số tiền</h5>
                 </td>
                 <td>
-                    <h5>${requestScope.cart.totalMoney}</h5>
+                    <h5>${o.cart.totalMoney}</h5>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="checkout_btn_inner float-right">
-            <a class="btn_1 checkout_btn_1" href="checkout">Thanh toán</a>
-          </div>
         </div>
       </div>
-  </section>
+  </section>     
+    <div>
+        <p>Ngày đặt: ${o.orderDate}</p>
+        <p>Trạng thái: 
+            <c:if test="${o.isShipped==false}">
+                Chưa giao
+            </c:if>
+            <c:if test="${o.isShipped!=false}">
+                Đã giao
+            </c:if>                
+        </p>
+        <c:if test="${o.isShipped!=false}">
+            <p>Còn nợ: ${o.dept}</p>
+        </c:if>         
+        <p>Ghi chú: ${o.note}</p>
+    </div>
+</c:forEach>
+
   <!--================End Cart Area =================-->
+
+    <div class="billing_details">
+    <div class="row">
+      <div class="col-lg-8">
+        <h3>Chi tiết đơn hàng</h3>
+        <form class="row contact_form" method="POST" action="checkout" novalidate="novalidate">
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="number" name="number" placeholder="Số điện thoại"/>
+          </div>
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="add1" name="add1" placeholder="Địa chỉ ship"/>
+          </div>
+          <div class="col-md-12 form-group">
+            <textarea class="form-control" name="message" id="message" rows="3"
+              placeholder="Ghi chú"></textarea>
+          </div>
+            <div class="checkout_btn_inner float-right">
+                <button class="btn_1 checkout_btn_1" style="margin-left: 15px">Thanh toán</button>
+            </div>             
+        </form>
+      </div>
+    </div>           
+  </div>    
 
 <footer>
     <!-- Footer Start-->
@@ -457,28 +482,5 @@
     <script src="./assets/js/main.js"></script>
     <script src="../Homepage/home.js"></script>
 </body>
-<script>
-    function loadData(){
-        var infor = document.querySelectorAll(".infor");
-        var xttp = new XMLHttpRequest();
-        document.querySelector(".table").addEventListener("click",function(e){
-            if(e.target && e.target.nodeName == "BUTTON"){
-                xttp.open("POST", "order", true);
-                xttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xttp.send(e.target.value); 
-            }
-        });
-        xttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.querySelector("table").innerHTML = this.responseText;
-            }
-        }
-    }
-    loadData();
-    
-    function deleteProduct(){
-        
-    }
-</script>
 </html>
 

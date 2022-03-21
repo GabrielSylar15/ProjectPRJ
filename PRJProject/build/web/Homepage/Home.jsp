@@ -55,13 +55,13 @@
                                 </li>
                              </c:if>
                              <li>
-                                 <a href="../template/displayproducts">Giày</a>
+                                 <a href="../template/displayproducts?categoryid=1">Giày</a>
                              </li>
                              <li>
-                                 <a href="">Dép</a>
+                                 <a href="../template/displayproducts?categoryid=2">Dép</a>
                              </li>
                              <li class="parent">
-                                 <a href="#">Phụ kiện</a>
+                                 <a href="../template/displayproducts">Phụ kiện</a>
                                  <ul class="child">
                                      <li>
                                          <a href="#">Áo mưa</a>
@@ -73,10 +73,7 @@
                                          <a href="#">Quần ủng</a>
                                      </li>
                                      <li>
-                                         <a href="#">Khác</a>
-                                     </li>
-                                     <li>
-                                         <a href="">Khác nữa</a>
+                                         <a href="../template/displayproducts?categoryid=3">Khác</a>
                                      </li>
                                  </ul>
                              </li>

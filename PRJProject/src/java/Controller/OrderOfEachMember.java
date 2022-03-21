@@ -5,24 +5,23 @@
  */
 package Controller;
 
-import dal.ProductDBContext;
+import dal.OrderDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Color_Size;
-import model.Product;
-import model.ProductCart;
+import model.Account;
+import model.Cart;
+import model.Order;
 
 /**
  *
  * @author ADMIN
  */
-public class ProductDetails extends HttpServlet {
+public class OrderOfEachMember extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,35 +34,18 @@ public class ProductDetails extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int pid;
-        if(request.getParameter("pid")==null){
-            pid=1;
-        }else{
-            pid = Integer.parseInt(request.getParameter("pid"));
-        }
-        ProductDBContext productDBContext = new ProductDBContext();
-        Product p = productDBContext.getOneProduct(pid);
+        Account account = (Account) request.getSession().getAttribute("account");
+        OrderDBContext orderDBContext = new OrderDBContext();
+        ArrayList<Order> listOrders = new ArrayList<>();
+        listOrders = orderDBContext.getListOrder(2);
         OrderController oc = new OrderController();
-        Cookie cookies[] = request.getCookies();
-        ArrayList<ProductCart> listProducts = new ArrayList<>();
-        if(cookies!=null){
-            for (Cookie cooky : cookies) {
-                if(cooky.getName().equals("cart")){
-                    listProducts = oc.getListProductsFromCooky(cooky.getValue());
-                }
-            }
-        }     
-        for (ProductCart pc : listProducts) {
-            for (Color_Size cs : p.getListColor_Sizes()) {
-                if(pc.getColorID()==cs.getColorID()&&
-                        pc.getSizeID()==cs.getSizeID()&&
-                        pc.getProductID()==p.getProductID()){
-                    cs.setQuantity(cs.getQuantity()-pc.getQuantity());
-                }
-            }
+        for (Order o : listOrders) {
+            Cart c = new Cart();
+            c = oc.getCart(o.getCart().getListProducts());
+            o.setCart(c);
         }
-        request.setAttribute("product", p);
-        request.getRequestDispatcher("singleproduct.jsp").forward(request, response);
+        request.setAttribute("listOrders", listOrders);
+        request.getRequestDispatcher("displayorder.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
